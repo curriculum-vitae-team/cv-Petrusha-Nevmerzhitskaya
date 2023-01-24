@@ -4,11 +4,25 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config webpack.dev",
-    "build": "webpack --config webpack.prod"
+    "build": "webpack --config webpack.prod",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "prepare": "husky install"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
     "@types/node": "^17.0.18",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "compression-webpack-plugin": "^10.0.0",
@@ -19,6 +33,8 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-webpack-plugin": "^3.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
@@ -29,5 +45,10 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.0",
     "webpack-merge": "^5.8.0"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "npm run lint"
+    ]
   }
 }

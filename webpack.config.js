@@ -7,7 +7,7 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: './src/index.ts'
+    app: './src/index.tsx'
   },
   plugins: [
     new EnvironmentPlugin([]),
