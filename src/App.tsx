@@ -1,16 +1,22 @@
+import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+import { client } from './graphql/auth/client';
 import AppRoute from './route/AppRoute';
 import theme from './themes/theme';
 
 function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <AppRoute />
-      </ThemeProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AppRoute />
+        </ThemeProvider>
+      </ApolloProvider>
     </BrowserRouter>
   );
 }

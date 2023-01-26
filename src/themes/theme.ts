@@ -3,12 +3,13 @@ import { createTheme } from '@mui/material';
 const theme = createTheme({
   components: {
     // Name of the component
-    MuiButton: {
+    MuiTab: {
       styleOverrides: {
         // Name of the slot
         root: {
-          // Some CSS
-          //   fontSize: '1rem'
+          '&.Mui-selected': {
+            color: '#c63031'
+          }
         }
       }
     }
