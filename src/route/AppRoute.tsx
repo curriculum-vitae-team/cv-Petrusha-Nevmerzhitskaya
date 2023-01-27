@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Layout } from '../components/Layout/Layout';
-import EmployeesPage from '../pages/EmployeesPage/EmployeesPage';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import SignupPage from '../pages/SignupPage/SignupPage';
+import { Layout } from '../components/Layout';
+import EmployeesPage from '../pages/EmployeesPage';
+import LoginPage from '../pages/LoginPage';
+import SignupPage from '../pages/SignupPage';
 
 export default function AppRoute() {
   return (
