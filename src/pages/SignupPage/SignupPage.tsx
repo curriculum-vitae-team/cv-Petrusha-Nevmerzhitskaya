@@ -102,7 +102,6 @@ const SignupPage: FC = () => {
             type="submit"
             variant="contained"
             loading={loading}
-            loadingIndicator="Loading…"
           >
             Sign up
           </LoadingButton>

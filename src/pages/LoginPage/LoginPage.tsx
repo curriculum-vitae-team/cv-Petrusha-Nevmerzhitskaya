@@ -101,7 +101,6 @@ const LoginPage: FC = () => {
             type="submit"
             variant="contained"
             loading={loading}
-            loadingIndicator="Loading…"
           >
             Login
           </LoadingButton>
