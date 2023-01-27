@@ -9,7 +9,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,8 @@ import { FormAuth, PaperAuth } from './Signup.styles';
 const SignupPage: FC = () => {
   const [signup, { loading }] = useMutation<ISignupResult>(SIGNUP);
   const navigate = useNavigate();
-  const [hiddenPassword, setHiddenPassword] = useState<boolean>(true);
+  const [hiddenPassword, setHiddenPassword] = useState(true);
+
   const showPassword = () => {
     setHiddenPassword((el) => !el);
   };

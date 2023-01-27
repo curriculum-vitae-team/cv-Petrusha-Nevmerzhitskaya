@@ -1,7 +1,6 @@
 import { ApolloProvider } from '@apollo/client';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
-import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { client } from './graphql/auth/client';

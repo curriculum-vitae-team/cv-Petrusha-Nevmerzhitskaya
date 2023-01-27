@@ -1,6 +1,5 @@
 import { Box, Tab } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
-import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export const AuthHeader = () => {
