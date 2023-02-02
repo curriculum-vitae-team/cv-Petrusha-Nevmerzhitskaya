@@ -1,17 +1,16 @@
-import { AppBar, Container } from '@mui/material';
-import { ReactElement } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
 
+import { AuthHeader } from '../AuthHeader';
 import { ToolbarHeader } from './Header.styles';
 
-interface Props {
-  children: ReactElement | ReactElement[];
-}
-
-export const Header: React.FC<Props> = ({ children }) => {
+export const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container>
-        <ToolbarHeader>{children}</ToolbarHeader>
+        <ToolbarHeader>
+          <AuthHeader />
+        </ToolbarHeader>
       </Container>
     </AppBar>
   );

@@ -1,3 +1,5 @@
-const isAdmin = (user: { role: 'employee' | 'admin' }) => user.role === 'admin';
+import { IUser } from '../interfaces/IUser';
+
+const isAdmin = (user: IUser | null) => user?.role === 'admin';
 
 export default isAdmin;
