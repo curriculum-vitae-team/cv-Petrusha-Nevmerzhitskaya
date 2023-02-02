@@ -14,7 +14,9 @@ export const SideMenuCard = styled(Card)(() => ({
   boxShadow: 'none'
 }));
 
-export const IconStyles = {
+export const IconStyles = styled('div')(() => ({
   color: '#706e6e',
-  mr: 2
-};
+  marginRight: 10,
+  display: 'flex',
+  alignItems: 'center'
+}));
