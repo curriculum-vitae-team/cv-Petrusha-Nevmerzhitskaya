@@ -13,3 +13,8 @@ export const SideMenuCard = styled(Card)(() => ({
   borderRadius: 0,
   boxShadow: 'none'
 }));
+
+export const IconStyles = {
+  color: '#706e6e',
+  mr: 2
+};

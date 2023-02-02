@@ -13,7 +13,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { RoutesPath } from '../../constants/routes';
-import { SideMenuCard, SideMenuToolbar } from './SideMenu.styles';
+import { IconStyles, SideMenuCard, SideMenuToolbar } from './SideMenu.styles';
 
 interface ISideMenuProps {
   open: boolean;
@@ -39,7 +39,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <GroupIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <GroupIcon sx={IconStyles} />
             Employees
           </MenuItem>
 
@@ -49,7 +49,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <AutoAwesomeMotionIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <AutoAwesomeMotionIcon sx={IconStyles} />
             Projects
           </MenuItem>
 
@@ -59,7 +59,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <ContactPageIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <ContactPageIcon sx={IconStyles} />
             Cvs
           </MenuItem>
 
@@ -71,7 +71,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <GroupsIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <GroupsIcon sx={IconStyles} />
             Departments
           </MenuItem>
 
@@ -81,7 +81,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <BadgeIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <BadgeIcon sx={IconStyles} />
             Positions
           </MenuItem>
 
@@ -91,7 +91,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <PsychologyIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <PsychologyIcon sx={IconStyles} />
             Skills
           </MenuItem>
 
@@ -101,7 +101,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               onClose();
             }}
           >
-            <TranslateIcon sx={{ color: '#706e6e', mr: 2 }} />
+            <TranslateIcon sx={IconStyles} />
             Languages
           </MenuItem>
         </MenuList>
