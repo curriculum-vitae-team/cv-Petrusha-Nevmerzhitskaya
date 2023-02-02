@@ -1,7 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Divider, MenuItem, MenuList } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
+import { Divider, Drawer, IconButton, MenuItem, MenuList } from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 

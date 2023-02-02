@@ -2,15 +2,16 @@ import { useReactiveVar } from '@apollo/client';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Logout from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Avatar, Typography } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  Avatar,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography
+} from '@mui/material';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
 import { IconStyles, UserMenuStyles, UserMenuWrap } from './UserMenu.styles';
 
@@ -18,7 +19,6 @@ export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const user = useReactiveVar(authService.user$);
-  const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -30,7 +30,6 @@ export const UserMenu = () => {
 
   const handleLogout = () => {
     authService.clearStorage();
-    navigate(RoutesPath.LOGIN);
   };
 
   return (

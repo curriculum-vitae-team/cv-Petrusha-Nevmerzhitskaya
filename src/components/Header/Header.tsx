@@ -1,7 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import MenuIcon from '@mui/icons-material/Menu';
-import { IconButton } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
+import { AppBar, IconButton } from '@mui/material';
 import { useState } from 'react';
 
 import { authService } from '../../graphql/auth/authService';
