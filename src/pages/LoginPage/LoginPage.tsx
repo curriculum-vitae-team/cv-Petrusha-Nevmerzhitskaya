@@ -13,6 +13,8 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { AuthHeader } from '../../components/AuthHeader';
+import { Header } from '../../components/Header';
 import { authService } from '../../graphql/auth/authService';
 import { ILoginResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
@@ -46,78 +48,83 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <PaperAuth elevation={24}>
-      <Grid
-        container
-        direction="column"
-        sx={{ p: 3, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Typography sx={{ mb: 1 }} variant="h4">
-          Welcome back!
-        </Typography>
-        <Typography>Hello again! Sign in to continue</Typography>
-        <FormAuth onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
-            label="Email"
-            placeholder="Enter email"
-            variant="outlined"
-            sx={{ mt: 2, mb: 0.5 }}
-            color="secondary"
-            type="email"
-            {...register('email')}
-            helperText={errors.email?.message}
-            error={!!errors.email}
-          />
+    <>
+      <Header>
+        <AuthHeader />
+      </Header>
+      <PaperAuth elevation={24}>
+        <Grid
+          container
+          direction="column"
+          sx={{ p: 3, alignItems: 'center', justifyContent: 'center' }}
+        >
+          <Typography sx={{ mb: 1 }} variant="h4">
+            Welcome back!
+          </Typography>
+          <Typography>Hello again! Sign in to continue</Typography>
+          <FormAuth onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              fullWidth
+              label="Email"
+              placeholder="Enter email"
+              variant="outlined"
+              sx={{ mt: 2, mb: 0.5 }}
+              color="secondary"
+              type="email"
+              {...register('email')}
+              helperText={errors.email?.message}
+              error={!!errors.email}
+            />
 
-          <TextField
-            fullWidth
-            sx={{ mt: 2, mb: 0.5 }}
-            label="Password"
-            placeholder="Enter password"
-            color="secondary"
-            variant="outlined"
-            type={hiddenPassword ? 'password' : 'text'}
-            {...register('password')}
-            helperText={errors.password?.message}
-            error={!!errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  sx={{ cursor: 'pointer' }}
-                  onClick={showPassword}
-                >
-                  {hiddenPassword ? <Visibility /> : <VisibilityOff />}
-                </InputAdornment>
-              )
-            }}
-          />
+            <TextField
+              fullWidth
+              sx={{ mt: 2, mb: 0.5 }}
+              label="Password"
+              placeholder="Enter password"
+              color="secondary"
+              variant="outlined"
+              type={hiddenPassword ? 'password' : 'text'}
+              {...register('password')}
+              helperText={errors.password?.message}
+              error={!!errors.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment
+                    position="end"
+                    sx={{ cursor: 'pointer' }}
+                    onClick={showPassword}
+                  >
+                    {hiddenPassword ? <Visibility /> : <VisibilityOff />}
+                  </InputAdornment>
+                )
+              }}
+            />
 
-          <LoadingButton
-            sx={{ mt: 2, backgroundColor: 'firebrick' }}
-            size="large"
-            fullWidth
-            type="submit"
-            variant="contained"
-            loading={loading}
-          >
-            Login
-          </LoadingButton>
+            <LoadingButton
+              sx={{ mt: 2, backgroundColor: 'firebrick' }}
+              size="large"
+              fullWidth
+              type="submit"
+              variant="contained"
+              loading={loading}
+            >
+              Login
+            </LoadingButton>
 
-          <Button
-            sx={{ mt: 1, color: 'firebrick' }}
-            fullWidth
-            type="submit"
-            variant="text"
-            component={NavLink}
-            to="/signup"
-          >
-            I don`t have an account
-          </Button>
-        </FormAuth>
-      </Grid>
-    </PaperAuth>
+            <Button
+              sx={{ mt: 1, color: 'firebrick' }}
+              fullWidth
+              type="submit"
+              variant="text"
+              component={NavLink}
+              to="/signup"
+            >
+              I don`t have an account
+            </Button>
+          </FormAuth>
+        </Grid>
+      </PaperAuth>
+    </>
   );
 };
 
