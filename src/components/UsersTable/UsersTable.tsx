@@ -8,7 +8,6 @@ import {
   MenuItem,
   Paper,
   Table,
-  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -20,6 +19,7 @@ import { DELETE_USER } from '../../graphql/user/mutation';
 import { USERS } from '../../graphql/users/query';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
+import { StyledTableBody, StyledTableCell } from './UsersTable.styles';
 
 interface AnchorType {
   anchor: SVGSVGElement | null;
@@ -108,12 +108,11 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox" sx={{ fontWeight: 'bold' }} />
+              <StyledTableCell padding="checkbox" />
               {headerLabels.map((label) => (
-                <TableCell
+                <StyledTableCell
                   key={label.label}
                   onClick={() => changeSort(label.value)}
-                  sx={{ fontWeight: 'bold' }}
                 >
                   {label.label}
                   {sorting.name === label.value &&
@@ -122,12 +121,12 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                     ) : (
                       <ArrowDownwardIcon fontSize="small" />
                     ))}
-                </TableCell>
+                </StyledTableCell>
               ))}
-              <TableCell padding="checkbox" sx={{ fontWeight: 'bold' }} />
+              <StyledTableCell padding="checkbox" />
             </TableRow>
           </TableHead>
-          <TableBody sx={{ backgroundColor: '#f5f5f7' }}>
+          <StyledTableBody>
             {sortUsers(filterUsers(data.users, search), sorting).map((user) => (
               <TableRow key={user.email}>
                 <TableCell>
@@ -145,7 +144,7 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
+          </StyledTableBody>
         </Table>
       </TableContainer>
     </>

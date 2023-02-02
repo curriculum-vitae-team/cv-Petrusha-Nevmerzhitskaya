@@ -6,7 +6,7 @@ import { ToolbarHeader } from './Header.styles';
 
 export const Header = () => {
   return (
-    <AppBar position="fixed">
+    <AppBar position="static">
       <Container>
         <ToolbarHeader>
           <AuthHeader />
