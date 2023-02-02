@@ -13,6 +13,7 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
 import { ISignupResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
@@ -42,7 +43,7 @@ const SignupPage: FC = () => {
     const { data } = await signup({ variables: input });
     if (data) {
       authService.addUserToStorage(data.signup.user, data.signup.access_token);
-      navigate('/employees');
+      navigate(RoutesPath.EMPLOYEES);
     }
   };
 
@@ -112,7 +113,7 @@ const SignupPage: FC = () => {
             type="submit"
             variant="text"
             component={NavLink}
-            to="/login"
+            to={RoutesPath.LOGIN}
           >
             Already registered?
           </Button>

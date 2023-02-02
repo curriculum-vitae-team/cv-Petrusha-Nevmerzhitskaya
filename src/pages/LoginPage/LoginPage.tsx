@@ -13,6 +13,7 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
 import { ILoginResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
@@ -41,7 +42,7 @@ const LoginPage: FC = () => {
     const { data } = await login({ variables: input });
     if (data) {
       authService.addUserToStorage(data.login.user, data.login.access_token);
-      navigate('/employees');
+      navigate(RoutesPath.EMPLOYEES);
     }
   };
 
@@ -111,7 +112,7 @@ const LoginPage: FC = () => {
             type="submit"
             variant="text"
             component={NavLink}
-            to="/signup"
+            to={RoutesPath.SIGNUP}
           >
             I don`t have an account
           </Button>
