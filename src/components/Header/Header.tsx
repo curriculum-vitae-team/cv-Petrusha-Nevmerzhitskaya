@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { authService } from '../../graphql/auth/authService';
 import { AuthHeader } from '../AuthHeader';
+import { HeaderBreadcrumbs } from '../Breadcrumbs/Bredcrumbs';
 import { SideMenu } from '../SideMenu';
 import { UserMenu } from '../UserMenu';
 import { ToolbarHeader } from './Header.styles';
@@ -23,20 +24,24 @@ export const Header = () => {
     }, 90);
   };
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#2e2e2e ' }}>
-      <ToolbarHeader>
-        {isAuth ? (
-          <>
-            <IconButton onClick={openMenu} sx={{ color: '#c63031' }}>
-              <MenuIcon />
-            </IconButton>
-            <SideMenu open={isOpen} onClose={closeMenu} />
-            <UserMenu />
-          </>
-        ) : (
-          <AuthHeader />
-        )}
-      </ToolbarHeader>
-    </AppBar>
+    <>
+      <AppBar position="fixed" sx={{ backgroundColor: '#2e2e2e ' }}>
+        <ToolbarHeader>
+          {isAuth ? (
+            <>
+              <IconButton onClick={openMenu} sx={{ color: '#c63031' }}>
+                <MenuIcon />
+              </IconButton>
+              <SideMenu open={isOpen} onClose={closeMenu} />
+              <UserMenu />
+            </>
+          ) : (
+            <AuthHeader />
+          )}
+        </ToolbarHeader>
+      </AppBar>
+
+      {isAuth && <HeaderBreadcrumbs />}
+    </>
   );
 };

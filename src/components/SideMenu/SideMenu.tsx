@@ -24,23 +24,21 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
         </SideMenuToolbar>
         <MenuList>
           {SideMenuItems.map(({ icon: Icon, label, path }, index) => {
-            return (
-              <>
-                <MenuItem
-                  key={path}
-                  onClick={() => {
-                    navigate(path);
-                    onClose();
-                  }}
-                >
-                  <IconStyles>
-                    <Icon />
-                  </IconStyles>
-                  {label}
-                </MenuItem>
-                {index === 2 && <Divider key={label} />}
-              </>
-            );
+            return [
+              <MenuItem
+                key={path}
+                onClick={() => {
+                  navigate(path);
+                  onClose();
+                }}
+              >
+                <IconStyles>
+                  <Icon />
+                </IconStyles>
+                {label}
+              </MenuItem>,
+              index === 2 && <Divider key={label} />
+            ];
           })}
         </MenuList>
       </SideMenuCard>
