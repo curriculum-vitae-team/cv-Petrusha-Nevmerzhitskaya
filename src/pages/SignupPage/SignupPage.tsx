@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
@@ -23,7 +23,6 @@ import { FormAuth, PaperAuth } from './Signup.styles';
 
 const SignupPage: FC = () => {
   const [signup, { loading }] = useMutation<ISignupResult>(SIGNUP);
-  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
 
   const showPassword = () => {
@@ -43,7 +42,6 @@ const SignupPage: FC = () => {
     const { data } = await signup({ variables: input });
     if (data) {
       authService.addUserToStorage(data.signup.user, data.signup.access_token);
-      navigate(RoutesPath.EMPLOYEES);
     }
   };
 

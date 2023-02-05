@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
@@ -23,7 +23,6 @@ import { schema } from './validationSchema';
 
 const LoginPage: FC = () => {
   const [login, { loading }] = useLazyQuery<ILoginResult>(LOGIN);
-  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState<boolean>(true);
   const showPassword = () => {
     setHiddenPassword((el) => !el);
@@ -42,7 +41,6 @@ const LoginPage: FC = () => {
     const { data } = await login({ variables: input });
     if (data) {
       authService.addUserToStorage(data.login.user, data.login.access_token);
-      navigate(RoutesPath.EMPLOYEES);
     }
   };
 
