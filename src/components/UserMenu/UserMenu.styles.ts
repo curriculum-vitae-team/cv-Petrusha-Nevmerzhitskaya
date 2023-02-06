@@ -6,12 +6,6 @@ export const UserMenuWrap = styled('div')(() => ({
   textAlign: 'center'
 }));
 
-export const UserMenuStyles = {
-  minWidth: 200,
-  mt: 1
-};
-
 export const IconStyles = {
-  color: '#706e6e',
   mr: 2
 };

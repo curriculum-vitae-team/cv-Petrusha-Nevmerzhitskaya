@@ -4,6 +4,7 @@ import { AppBar, IconButton } from '@mui/material';
 import { useState } from 'react';
 
 import { authService } from '../../graphql/auth/authService';
+import theme from '../../themes/theme';
 import { AuthHeader } from '../AuthHeader';
 import { HeaderBreadcrumbs } from '../Breadcrumbs/Bredcrumbs';
 import { SideMenu } from '../SideMenu';
@@ -25,11 +26,17 @@ export const Header = () => {
   };
   return (
     <>
-      <AppBar position="fixed" sx={{ backgroundColor: '#2e2e2e ' }}>
+      <AppBar
+        position="fixed"
+        sx={{ backgroundColor: theme.palette.primary.dark }}
+      >
         <ToolbarHeader>
           {isAuth ? (
             <>
-              <IconButton onClick={openMenu} sx={{ color: '#c63031' }}>
+              <IconButton
+                onClick={openMenu}
+                sx={{ color: theme.palette.primary.main }}
+              >
                 <MenuIcon />
               </IconButton>
               <SideMenu open={isOpen} onClose={closeMenu} />

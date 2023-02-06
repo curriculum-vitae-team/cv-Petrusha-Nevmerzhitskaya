@@ -3,6 +3,7 @@ import { Divider, Drawer, IconButton, MenuItem, MenuList } from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import theme from '../../themes/theme';
 import { IconStyles, SideMenuCard, SideMenuToolbar } from './SideMenu.styles';
 import { SideMenuItems } from './SideMenuItems';
 
@@ -13,12 +14,18 @@ interface ISideMenuProps {
 
 export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
   const navigate = useNavigate();
-
+  const ItemOnClick = (path: string) => {
+    navigate(path);
+    onClose();
+  };
   return (
     <Drawer anchor="left" open={open} onClick={onClose}>
       <SideMenuCard>
         <SideMenuToolbar>
-          <IconButton onClick={onClose} sx={{ color: '#c63031' }}>
+          <IconButton
+            onClick={onClose}
+            sx={{ color: theme.palette.primary.main }}
+          >
             <CloseIcon />
           </IconButton>
         </SideMenuToolbar>
@@ -28,8 +35,7 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
               <MenuItem
                 key={path}
                 onClick={() => {
-                  navigate(path);
-                  onClose();
+                  ItemOnClick(path);
                 }}
               >
                 <IconStyles>

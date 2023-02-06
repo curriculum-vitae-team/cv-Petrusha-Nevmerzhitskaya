@@ -18,6 +18,7 @@ import { authService } from '../../graphql/auth/authService';
 import { ILoginResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
 import { LOGIN } from '../../graphql/auth/query';
+import theme from '../../themes/theme';
 import { FormAuth, PaperAuth } from '../SignupPage/Signup.styles';
 import { schema } from './validationSchema';
 
@@ -94,7 +95,7 @@ const LoginPage: FC = () => {
           />
 
           <LoadingButton
-            sx={{ mt: 2, backgroundColor: 'firebrick' }}
+            sx={{ mt: 2, backgroundColor: theme.palette.primary.main }}
             size="large"
             fullWidth
             type="submit"
@@ -105,7 +106,7 @@ const LoginPage: FC = () => {
           </LoadingButton>
 
           <Button
-            sx={{ mt: 1, color: 'firebrick' }}
+            sx={{ mt: 1, color: theme.palette.primary.main }}
             fullWidth
             type="submit"
             variant="text"

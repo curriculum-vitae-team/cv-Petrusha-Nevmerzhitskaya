@@ -13,7 +13,8 @@ import {
 import React, { useState } from 'react';
 
 import { authService } from '../../graphql/auth/authService';
-import { IconStyles, UserMenuStyles, UserMenuWrap } from './UserMenu.styles';
+import theme from '../../themes/theme';
+import { IconStyles, UserMenuWrap } from './UserMenu.styles';
 
 export const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -37,7 +38,7 @@ export const UserMenu = () => {
       <UserMenuWrap>
         <Typography>{user?.email}</Typography>
         <IconButton onClick={handleClick} size="large">
-          <Avatar sx={{ backgroundColor: '#c63031' }}>
+          <Avatar sx={{ backgroundColor: theme.palette.primary.main }}>
             {user?.email[0].toUpperCase()}
           </Avatar>
         </IconButton>
@@ -48,7 +49,7 @@ export const UserMenu = () => {
         onClick={handleClose}
         PaperProps={{
           elevation: 24,
-          sx: UserMenuStyles
+          sx: { minWidth: 200, mt: 1, color: theme.palette.primary.light }
         }}
       >
         <MenuItem>

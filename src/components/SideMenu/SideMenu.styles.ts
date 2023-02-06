@@ -1,10 +1,10 @@
 import { Card, styled, Toolbar } from '@mui/material';
 
-export const SideMenuToolbar = styled(Toolbar)({
+export const SideMenuToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'flex-end',
-  backgroundColor: '#2e2e2e'
-});
+  backgroundColor: theme.palette.primary.dark
+}));
 
 export const SideMenuCard = styled(Card)(() => ({
   display: 'flex',
@@ -14,9 +14,9 @@ export const SideMenuCard = styled(Card)(() => ({
   boxShadow: 'none'
 }));
 
-export const IconStyles = styled('div')(() => ({
-  color: '#706e6e',
-  marginRight: 10,
+export const IconStyles = styled('div')(({ theme }) => ({
+  color: theme.palette.primary.light,
+  marginRight: 8,
   display: 'flex',
   alignItems: 'center'
 }));
