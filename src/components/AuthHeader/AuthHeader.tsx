@@ -2,6 +2,9 @@ import { Box, Tab } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import { NavLink, useLocation } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
+import theme from '../../themes/theme';
+
 export const AuthHeader = () => {
   const location = useLocation();
 
@@ -9,15 +12,17 @@ export const AuthHeader = () => {
     <Box sx={{ mt: 2, width: '100%' }}>
       <Tabs
         value={location.pathname}
-        TabIndicatorProps={{ style: { background: '#c63031' } }}
+        TabIndicatorProps={{
+          style: { background: theme.palette.primary.main }
+        }}
         centered
       >
         <Tab
           sx={{ color: 'white', minWidth: 150, fontWeight: 600 }}
-          value="/login"
+          value={RoutesPath.LOGIN}
           component={NavLink}
           label="login"
-          to="/login"
+          to={RoutesPath.LOGIN}
         />
         <Tab
           sx={{
@@ -25,10 +30,10 @@ export const AuthHeader = () => {
             minWidth: 150,
             fontWeight: 600
           }}
-          value="/signup"
+          value={RoutesPath.SIGNUP}
           component={NavLink}
           label="signup"
-          to="/signup"
+          to={RoutesPath.SIGNUP}
         />
       </Tabs>
     </Box>
