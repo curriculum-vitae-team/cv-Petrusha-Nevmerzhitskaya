@@ -4,6 +4,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Avatar,
+  IconButton,
   Menu,
   MenuItem,
   Paper,
@@ -17,6 +18,7 @@ import { useState } from 'react';
 
 import { DELETE_USER } from '../../graphql/user/mutation';
 import { USERS } from '../../graphql/users/query';
+import Loader from '../Loader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
 import { StyledTableBody, StyledTableCell } from './UsersTable.styles';
@@ -85,7 +87,7 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
@@ -138,9 +140,11 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                 <TableCell>{user.department_name}</TableCell>
                 <TableCell>{user.position_name}</TableCell>
                 <TableCell>
-                  <MoreVertIcon
-                    onClick={(event) => handleMenuOpen(event, user.id)}
-                  />
+                  <IconButton>
+                    <MoreVertIcon
+                      onClick={(event) => handleMenuOpen(event, user.id)}
+                    />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
