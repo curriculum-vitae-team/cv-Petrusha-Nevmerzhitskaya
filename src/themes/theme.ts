@@ -13,6 +13,13 @@ const theme = createTheme({
         }
       }
     }
+  },
+  palette: {
+    primary: {
+      main: '#c63031',
+      dark: '#2e2e2e',
+      light: '#706e6e'
+    }
   }
 });
 

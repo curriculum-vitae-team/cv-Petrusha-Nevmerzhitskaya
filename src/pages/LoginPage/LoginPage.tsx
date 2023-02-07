@@ -11,18 +11,19 @@ import {
 } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
 import { ILoginResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
 import { LOGIN } from '../../graphql/auth/query';
+import theme from '../../themes/theme';
 import { FormAuth, PaperAuth } from '../SignupPage/Signup.styles';
 import { schema } from './validationSchema';
 
 const LoginPage: FC = () => {
   const [login, { loading }] = useLazyQuery<ILoginResult>(LOGIN);
-  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState<boolean>(true);
   const showPassword = () => {
     setHiddenPassword((el) => !el);
@@ -41,7 +42,6 @@ const LoginPage: FC = () => {
     const { data } = await login({ variables: input });
     if (data) {
       authService.addUserToStorage(data.login.user, data.login.access_token);
-      navigate('/employees');
     }
   };
 
@@ -95,7 +95,7 @@ const LoginPage: FC = () => {
           />
 
           <LoadingButton
-            sx={{ mt: 2, backgroundColor: 'firebrick' }}
+            sx={{ mt: 2, backgroundColor: theme.palette.primary.main }}
             size="large"
             fullWidth
             type="submit"
@@ -106,12 +106,12 @@ const LoginPage: FC = () => {
           </LoadingButton>
 
           <Button
-            sx={{ mt: 1, color: 'firebrick' }}
+            sx={{ mt: 1, color: theme.palette.primary.main }}
             fullWidth
             type="submit"
             variant="text"
             component={NavLink}
-            to="/signup"
+            to={RoutesPath.SIGNUP}
           >
             I don`t have an account
           </Button>

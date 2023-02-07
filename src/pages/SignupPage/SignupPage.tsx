@@ -11,18 +11,19 @@ import {
 } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
 import { authService } from '../../graphql/auth/authService';
 import { ISignupResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
 import { SIGNUP } from '../../graphql/auth/mutation';
+import theme from '../../themes/theme';
 import { schema } from '../LoginPage/validationSchema';
 import { FormAuth, PaperAuth } from './Signup.styles';
 
 const SignupPage: FC = () => {
   const [signup, { loading }] = useMutation<ISignupResult>(SIGNUP);
-  const navigate = useNavigate();
   const [hiddenPassword, setHiddenPassword] = useState(true);
 
   const showPassword = () => {
@@ -42,7 +43,6 @@ const SignupPage: FC = () => {
     const { data } = await signup({ variables: input });
     if (data) {
       authService.addUserToStorage(data.signup.user, data.signup.access_token);
-      navigate('/employees');
     }
   };
 
@@ -96,7 +96,7 @@ const SignupPage: FC = () => {
           />
 
           <LoadingButton
-            sx={{ mt: 2, backgroundColor: 'firebrick' }}
+            sx={{ mt: 2, backgroundColor: theme.palette.primary.main }}
             size="large"
             fullWidth
             type="submit"
@@ -107,12 +107,12 @@ const SignupPage: FC = () => {
           </LoadingButton>
 
           <Button
-            sx={{ mt: 1, color: 'firebrick' }}
+            sx={{ mt: 1, color: theme.palette.primary.main }}
             fullWidth
             type="submit"
             variant="text"
             component={NavLink}
-            to="/login"
+            to={RoutesPath.LOGIN}
           >
             Already registered?
           </Button>
