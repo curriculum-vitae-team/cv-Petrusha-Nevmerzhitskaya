@@ -4,6 +4,6 @@ export const StyledTableCell = styled(TableCell)({
   fontWeight: 'bold'
 });
 
-export const StyledTableBody = styled(TableBody)({
-  backgroundColor: '#f5f5f7'
-});
+export const StyledTableBody = styled(TableBody)(({ theme }) => ({
+  backgroundColor: theme.palette.lightGrey.light
+}));

@@ -95,7 +95,7 @@ const LoginPage: FC = () => {
           />
 
           <LoadingButton
-            sx={{ mt: 2, backgroundColor: theme.palette.primary.main }}
+            sx={{ mt: 2, backgroundColor: theme.palette.secondary.main }}
             size="large"
             fullWidth
             type="submit"
@@ -106,7 +106,7 @@ const LoginPage: FC = () => {
           </LoadingButton>
 
           <Button
-            sx={{ mt: 1, color: theme.palette.primary.main }}
+            sx={{ mt: 1, color: theme.palette.secondary.main }}
             fullWidth
             type="submit"
             variant="text"

@@ -13,7 +13,7 @@ export const AuthHeader = () => {
       <Tabs
         value={location.pathname}
         TabIndicatorProps={{
-          style: { background: theme.palette.primary.main }
+          style: { background: theme.palette.secondary.main }
         }}
         centered
       >

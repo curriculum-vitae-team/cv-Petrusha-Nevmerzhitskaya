@@ -38,7 +38,7 @@ export const UserMenu = () => {
       <UserMenuWrap>
         <Typography>{user?.email}</Typography>
         <IconButton onClick={handleClick} size="large">
-          <Avatar sx={{ backgroundColor: theme.palette.primary.main }}>
+          <Avatar sx={{ backgroundColor: theme.palette.secondary.main }}>
             {user?.email[0].toUpperCase()}
           </Avatar>
         </IconButton>

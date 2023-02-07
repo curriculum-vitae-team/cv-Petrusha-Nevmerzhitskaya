@@ -18,13 +18,14 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
     navigate(path);
     onClose();
   };
+
   return (
     <Drawer anchor="left" open={open} onClick={onClose}>
       <SideMenuCard>
         <SideMenuToolbar>
           <IconButton
             onClick={onClose}
-            sx={{ color: theme.palette.primary.main }}
+            sx={{ color: theme.palette.secondary.main }}
           >
             <CloseIcon />
           </IconButton>

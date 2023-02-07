@@ -35,7 +35,7 @@ export const Header = () => {
             <>
               <IconButton
                 onClick={openMenu}
-                sx={{ color: theme.palette.primary.main }}
+                sx={{ color: theme.palette.secondary.main }}
               >
                 <MenuIcon />
               </IconButton>
