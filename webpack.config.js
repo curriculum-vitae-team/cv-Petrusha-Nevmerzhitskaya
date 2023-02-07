@@ -1,9 +1,9 @@
-const { resolve } = require('path')
-require('dotenv').config()
-const { EnvironmentPlugin } = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const ESLintPlugin = require('eslint-webpack-plugin')
+const { resolve } = require('path');
+require('dotenv').config();
+const { EnvironmentPlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -38,6 +38,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         include: resolve(__dirname, 'src/assets'),
         type: 'asset/resource'
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -50,4 +54,4 @@ module.exports = {
       chunks: 'async'
     }
   }
-}
+};
