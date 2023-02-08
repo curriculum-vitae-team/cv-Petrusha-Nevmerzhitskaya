@@ -15,6 +15,7 @@ import {
   TableRow
 } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { DELETE_USER } from '../../graphql/user/mutation';
 import { USERS } from '../../graphql/users/query';
@@ -22,16 +23,6 @@ import Loader from '../Loader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
 import { StyledTableBody, StyledTableCell } from './UsersTable.styles';
-
-interface AnchorType {
-  anchor: SVGSVGElement | null;
-  userId: string;
-}
-
-const initialAnchor: AnchorType = {
-  anchor: null,
-  userId: ''
-};
 
 interface HeaderLabelType {
   label: string;
@@ -52,6 +43,8 @@ interface Props {
 }
 
 const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
+  const navigate = useNavigate();
+
   const { loading, error, data } = useQuery(USERS);
   const [deleteUserMutation] = useMutation<{ affected: number }>(DELETE_USER);
 
@@ -59,22 +52,24 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     name: 'department_name',
     asc: true
   });
-
-  const [anchorEl, setAnchorEl] = useState<AnchorType>(initialAnchor);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   const handleMenuClose = () => {
-    setAnchorEl(initialAnchor);
+    setAnchorEl(null);
+    setSelectedUser(null);
   };
 
   const handleMenuOpen = (
-    event: React.MouseEvent<SVGSVGElement>,
+    event: React.MouseEvent<HTMLButtonElement>,
     userId: string
   ) => {
-    setAnchorEl({ anchor: event.currentTarget, userId });
+    setAnchorEl(event.currentTarget);
+    setSelectedUser(userId);
   };
 
   const changeSort = (label: LabelsType) => {
-    setSorting((prev) => ({
+    setSorting((prev: SortingType) => ({
       name: label,
       asc: prev.name === label ? !prev.asc : true
     }));
@@ -82,8 +77,12 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
 
   const deleteUser = async () => {
     await deleteUserMutation({
-      variables: { id: anchorEl.userId }
+      variables: { id: selectedUser }
     });
+  };
+
+  const openProfile = () => {
+    navigate(`/employees/${selectedUser}/profile`);
   };
 
   if (loading) {
@@ -96,12 +95,8 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
 
   return (
     <>
-      <Menu
-        anchorEl={anchorEl.anchor}
-        open={!!anchorEl.anchor}
-        onClose={handleMenuClose}
-      >
-        <MenuItem>Profile</MenuItem>
+      <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
+        <MenuItem onClick={openProfile}>Profile</MenuItem>
         <MenuItem onClick={deleteUser} disabled={!isUserAdmin}>
           Delete user
         </MenuItem>
@@ -140,10 +135,10 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                 <TableCell>{user.department_name}</TableCell>
                 <TableCell>{user.position_name}</TableCell>
                 <TableCell>
-                  <IconButton>
-                    <MoreVertIcon
-                      onClick={(event) => handleMenuOpen(event, user.id)}
-                    />
+                  <IconButton
+                    onClick={(event) => handleMenuOpen(event, user.id)}
+                  >
+                    <MoreVertIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>

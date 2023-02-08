@@ -4,7 +4,7 @@ export const PaperAuth = styled(Paper)({
   height: 415,
   width: 550,
   padding: '8px',
-  margin: '110px auto'
+  margin: '0 auto'
 });
 
 export const FormAuth = styled('form')({

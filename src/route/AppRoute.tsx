@@ -19,23 +19,27 @@ const CvsPage = lazy(() => import('../pages/CvsPage'));
 const PositionsPage = lazy(() => import('../pages/PositionsPage'));
 const ProjectsPage = lazy(() => import('../pages/ProjectsPage'));
 const SkillsPage = lazy(() => import('../pages/SkillsPage'));
+const EmployeeCvsPage = lazy(() => import('../pages/EmployeeCvsPage'));
+const EmployeeLanguagesPage = lazy(() =>
+  import('../pages/EmployeeLanguagesPage')
+);
+const EmployeeProfilePage = lazy(() => import('../pages/EmployeeProfilePage'));
+const EmployeeSkillsPage = lazy(() => import('../pages/EmployeeSkillsPage'));
 
 export default function AppRoute() {
   const isAuth = useReactiveVar(authService.access_token$);
+
+  const redirectPath = isAuth ? (
+    <Navigate to={RoutesPath.EMPLOYEES} replace />
+  ) : (
+    <Navigate to={RoutesPath.LOGIN} replace />
+  );
+
   return (
     <Suspense fallback={<LinearProgress color="secondary" />}>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              isAuth ? (
-                <Navigate to={RoutesPath.EMPLOYEES} replace />
-              ) : (
-                <Navigate to={RoutesPath.LOGIN} replace />
-              )
-            }
-          />
+        <Route path={RoutesPath.INITIAL} element={<Layout />}>
+          <Route index element={redirectPath} />
 
           <Route
             path={RoutesPath.SIGNUP}
@@ -110,8 +114,40 @@ export default function AppRoute() {
               </PrivateRoute>
             }
           />
+          <Route
+            path={RoutesPath.EMPLOYEE_PROFILE}
+            element={
+              <PrivateRoute>
+                <EmployeeProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={RoutesPath.EMPLOYEE_SKILLS}
+            element={
+              <PrivateRoute>
+                <EmployeeSkillsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={RoutesPath.EMPLOYEE_LANGUAGES}
+            element={
+              <PrivateRoute>
+                <EmployeeLanguagesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={RoutesPath.EMPLOYEE_CVS}
+            element={
+              <PrivateRoute>
+                <EmployeeCvsPage />
+              </PrivateRoute>
+            }
+          />
 
-          <Route path="*" element={<LoginPage />} />
+          <Route path={RoutesPath.OTHER} element={redirectPath} />
         </Route>
       </Routes>
     </Suspense>
