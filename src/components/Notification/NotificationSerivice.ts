@@ -1,4 +1,5 @@
 import { makeVar, ReactiveVar } from '@apollo/client';
+import { v4 as uuidv4 } from 'uuid';
 
 export enum AlertValues {
   SUCCESS = 'success',
@@ -8,20 +9,17 @@ export enum AlertValues {
 export interface IAlert {
   type: AlertValues.SUCCESS | AlertValues.ERROR;
   message: string;
-  id: number;
+  id: string;
 }
 
 export interface INotification {
   alerts: ReactiveVar<IAlert[]>;
-  alertId: number;
   Error(message: string): void;
   Success(message: string): void;
 }
 
 class Notification implements INotification {
   alerts = makeVar<IAlert[]>([]);
-
-  alertId = 0;
 
   Error(message: string) {
     this.addAlert(AlertValues.ERROR, message);
@@ -33,7 +31,7 @@ class Notification implements INotification {
 
   addAlert(type: AlertValues, message: string) {
     const alertData: IAlert = {
-      id: this.alertId + 1,
+      id: uuidv4(),
       message,
       type
     };
@@ -42,7 +40,7 @@ class Notification implements INotification {
     this.autoCloseAlert(alertData.id);
   }
 
-  autoCloseAlert(id: number) {
+  autoCloseAlert(id: string) {
     setTimeout(() => {
       const alerts = this.alerts();
       this.alerts(alerts.filter((alert) => alert.id !== id));
