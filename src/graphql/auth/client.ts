@@ -2,6 +2,7 @@ import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
+import { notificationService } from '../../components/Notification/NotificationSerivice';
 import { authService } from './authService';
 
 const httpLink = new HttpLink({
@@ -20,6 +21,7 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message }) => {
+      notificationService.Error(message);
       console.error(message);
       if (message === 'Unauthorized') {
         authService.clearStorage();
@@ -27,6 +29,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     });
   }
   if (networkError) {
+    notificationService.Error(networkError.message);
     console.error(networkError);
   }
 });
