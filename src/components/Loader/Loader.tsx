@@ -1,9 +1,11 @@
-import { Box, CircularProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+
+import { StyledBox } from './Loader.styles';
 
 const Loader: React.FC = () => (
-  <Box margin={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+  <StyledBox margin={5}>
     <CircularProgress />
-  </Box>
+  </StyledBox>
 );
 
 export default Loader;

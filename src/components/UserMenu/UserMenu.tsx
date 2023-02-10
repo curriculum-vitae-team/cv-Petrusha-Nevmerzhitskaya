@@ -47,11 +47,7 @@ export const UserMenu = () => {
       <UserMenuWrap>
         <Typography>{user?.profile.full_name || user?.email}</Typography>
         <IconButton onClick={handleClick} size="large">
-          <StyledAvatar
-            src={user?.profile.avatar}
-            alt="user avatar"
-            sx={{ backgroundColor: theme.palette.secondary.main }}
-          >
+          <StyledAvatar src={user?.profile.avatar} alt="user avatar">
             {user?.email[0].toUpperCase()}
           </StyledAvatar>
         </IconButton>

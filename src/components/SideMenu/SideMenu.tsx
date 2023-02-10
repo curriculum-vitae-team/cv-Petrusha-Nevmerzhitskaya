@@ -1,10 +1,14 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Divider, Drawer, IconButton, MenuItem, MenuList } from '@mui/material';
+import { Divider, Drawer, MenuItem, MenuList } from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import theme from '../../themes/theme';
-import { IconStyles, SideMenuCard, SideMenuToolbar } from './SideMenu.styles';
+import {
+  IconStyles,
+  SideMenuCard,
+  SideMenuToolbar,
+  StyledIconButton
+} from './SideMenu.styles';
 import { SideMenuItems } from './SideMenuItems';
 
 interface ISideMenuProps {
@@ -23,12 +27,9 @@ export const SideMenu: FC<ISideMenuProps> = ({ open, onClose }) => {
     <Drawer anchor="left" open={open} onClick={onClose}>
       <SideMenuCard>
         <SideMenuToolbar>
-          <IconButton
-            onClick={onClose}
-            sx={{ color: theme.palette.secondary.main }}
-          >
+          <StyledIconButton onClick={onClose}>
             <CloseIcon />
-          </IconButton>
+          </StyledIconButton>
         </SideMenuToolbar>
         <MenuList>
           {SideMenuItems.map(({ icon: Icon, label, path }, index) => {

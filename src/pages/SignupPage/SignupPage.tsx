@@ -1,15 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Button,
-  Grid,
-  InputAdornment,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
@@ -21,7 +13,15 @@ import { IFormInput } from '../../graphql/auth/IFormInput';
 import { SIGNUP } from '../../graphql/auth/mutation';
 import theme from '../../themes/theme';
 import { schema } from '../LoginPage/validationSchema';
-import { FormAuth, PaperAuth } from './Signup.styles';
+import {
+  FormAuth,
+  PaperAuth,
+  StyledGrid,
+  StyledInputAdornment,
+  StyledLoadingButton,
+  StyledTextField,
+  StyledTypography
+} from './Signup.styles';
 
 const SignupPage: FC = () => {
   const [signup, { loading }] = useMutation<ISignupResult>(SIGNUP);
@@ -50,22 +50,15 @@ const SignupPage: FC = () => {
   return (
     <Box paddingTop={15}>
       <PaperAuth elevation={24}>
-        <Grid
-          container
-          direction="column"
-          sx={{ p: 3, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Typography sx={{ mb: 1 }} variant="h4">
-            Register Now
-          </Typography>
+        <StyledGrid container direction="column">
+          <StyledTypography variant="h4">Register Now</StyledTypography>
           <Typography>Welcome! Sign up to continue.</Typography>
           <FormAuth onSubmit={handleSubmit(onSubmit)}>
-            <TextField
+            <StyledTextField
               fullWidth
               label="Email"
               placeholder="Enter email"
               variant="outlined"
-              sx={{ mt: 2, mb: 0.5 }}
               color="secondary"
               type="email"
               {...register('email')}
@@ -73,9 +66,8 @@ const SignupPage: FC = () => {
               error={!!errors.email}
             />
 
-            <TextField
+            <StyledTextField
               fullWidth
-              sx={{ mt: 2, mb: 0.5 }}
               label="Password"
               placeholder="Enter password"
               color="secondary"
@@ -86,19 +78,14 @@ const SignupPage: FC = () => {
               error={!!errors.password}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment
-                    position="end"
-                    sx={{ cursor: 'pointer' }}
-                    onClick={showPassword}
-                  >
+                  <StyledInputAdornment position="end" onClick={showPassword}>
                     {hiddenPassword ? <Visibility /> : <VisibilityOff />}
-                  </InputAdornment>
+                  </StyledInputAdornment>
                 )
               }}
             />
 
-            <LoadingButton
-              sx={{ mt: 2, backgroundColor: theme.palette.secondary.main }}
+            <StyledLoadingButton
               size="large"
               fullWidth
               type="submit"
@@ -106,7 +93,7 @@ const SignupPage: FC = () => {
               loading={loading}
             >
               Sign up
-            </LoadingButton>
+            </StyledLoadingButton>
 
             <Button
               sx={{ mt: 1, color: theme.palette.secondary.main }}
@@ -119,7 +106,7 @@ const SignupPage: FC = () => {
               Already registered?
             </Button>
           </FormAuth>
-        </Grid>
+        </StyledGrid>
       </PaperAuth>
     </Box>
   );
