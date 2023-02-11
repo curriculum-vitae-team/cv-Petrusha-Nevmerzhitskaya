@@ -1,16 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const DELETE_USER = gql`
-  mutation DeleteUser($id: ID!) {
-    deleteUser(id: $id) {
-      affected
-    }
-  }
-`;
-
-export const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $user: UpdateUserInput!) {
-    updateUser(id: $id, user: $user) {
+export const USER = gql`
+  query User($id: ID!) {
+    user(id: $id) {
       id
       created_at
       email
@@ -76,17 +68,5 @@ export const UPDATE_USER = gql`
       position_name
       role
     }
-  }
-`;
-
-export const UPLOAD_AVATAR = gql`
-  mutation UploadAvatar($id: ID!, $avatar: AvatarInput!) {
-    uploadAvatar(id: $id, avatar: $avatar)
-  }
-`;
-
-export const DELETE_AVATAR = gql`
-  mutation DeleteAvatar($id: ID!) {
-    deleteAvatar(id: $id)
   }
 `;

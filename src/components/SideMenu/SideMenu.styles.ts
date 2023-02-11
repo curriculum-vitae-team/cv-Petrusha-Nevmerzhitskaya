@@ -1,4 +1,4 @@
-import { Card, styled, Toolbar } from '@mui/material';
+import { Card, IconButton, styled, Toolbar } from '@mui/material';
 
 export const SideMenuToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -12,6 +12,10 @@ export const SideMenuCard = styled(Card)(() => ({
   width: 250,
   borderRadius: 0,
   boxShadow: 'none'
+}));
+
+export const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  color: theme.palette.secondary.main
 }));
 
 export const IconStyles = styled('div')(({ theme }) => ({

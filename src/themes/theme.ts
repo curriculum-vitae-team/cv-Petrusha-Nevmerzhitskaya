@@ -41,7 +41,8 @@ const theme = createTheme({
     // light grey (background)
     lightGrey: {
       main: '#bdbdbd',
-      light: '#f5f5f7'
+      light: '#f5f5f7',
+      dark: '#6d6d6d'
     }
   }
 });

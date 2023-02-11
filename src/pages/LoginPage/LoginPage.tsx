@@ -1,14 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import {
-  Button,
-  Grid,
-  InputAdornment,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
@@ -19,7 +12,15 @@ import { ILoginResult } from '../../graphql/auth/IAuthResult';
 import { IFormInput } from '../../graphql/auth/IFormInput';
 import { LOGIN } from '../../graphql/auth/query';
 import theme from '../../themes/theme';
-import { FormAuth, PaperAuth } from '../SignupPage/Signup.styles';
+import {
+  FormAuth,
+  PaperAuth,
+  StyledGrid,
+  StyledInputAdornment,
+  StyledLoadingButton,
+  StyledTextField,
+  StyledTypography
+} from '../SignupPage/Signup.styles';
 import { schema } from './validationSchema';
 
 const LoginPage: FC = () => {
@@ -46,78 +47,67 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <PaperAuth elevation={24}>
-      <Grid
-        container
-        direction="column"
-        sx={{ p: 3, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Typography sx={{ mb: 1 }} variant="h4">
-          Welcome back!
-        </Typography>
-        <Typography>Hello again! Sign in to continue</Typography>
-        <FormAuth onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
-            label="Email"
-            placeholder="Enter email"
-            variant="outlined"
-            sx={{ mt: 2, mb: 0.5 }}
-            color="secondary"
-            type="email"
-            {...register('email')}
-            helperText={errors.email?.message}
-            error={!!errors.email}
-          />
+    <Box paddingTop={15}>
+      <PaperAuth elevation={24}>
+        <StyledGrid container direction="column">
+          <StyledTypography variant="h4">Welcome back!</StyledTypography>
+          <Typography>Hello again! Sign in to continue</Typography>
+          <FormAuth onSubmit={handleSubmit(onSubmit)}>
+            <StyledTextField
+              fullWidth
+              label="Email"
+              placeholder="Enter email"
+              variant="outlined"
+              color="secondary"
+              type="email"
+              {...register('email')}
+              helperText={errors.email?.message}
+              error={!!errors.email}
+            />
 
-          <TextField
-            fullWidth
-            sx={{ mt: 2, mb: 0.5 }}
-            label="Password"
-            placeholder="Enter password"
-            color="secondary"
-            variant="outlined"
-            type={hiddenPassword ? 'password' : 'text'}
-            {...register('password')}
-            helperText={errors.password?.message}
-            error={!!errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  sx={{ cursor: 'pointer' }}
-                  onClick={showPassword}
-                >
-                  {hiddenPassword ? <Visibility /> : <VisibilityOff />}
-                </InputAdornment>
-              )
-            }}
-          />
+            <StyledTextField
+              fullWidth
+              label="Password"
+              placeholder="Enter password"
+              color="secondary"
+              variant="outlined"
+              type={hiddenPassword ? 'password' : 'text'}
+              {...register('password')}
+              helperText={errors.password?.message}
+              error={!!errors.password}
+              InputProps={{
+                endAdornment: (
+                  <StyledInputAdornment position="end" onClick={showPassword}>
+                    {hiddenPassword ? <Visibility /> : <VisibilityOff />}
+                  </StyledInputAdornment>
+                )
+              }}
+            />
 
-          <LoadingButton
-            sx={{ mt: 2, backgroundColor: theme.palette.secondary.main }}
-            size="large"
-            fullWidth
-            type="submit"
-            variant="contained"
-            loading={loading}
-          >
-            Login
-          </LoadingButton>
+            <StyledLoadingButton
+              size="large"
+              fullWidth
+              type="submit"
+              variant="contained"
+              loading={loading}
+            >
+              Login
+            </StyledLoadingButton>
 
-          <Button
-            sx={{ mt: 1, color: theme.palette.secondary.main }}
-            fullWidth
-            type="submit"
-            variant="text"
-            component={NavLink}
-            to={RoutesPath.SIGNUP}
-          >
-            I don`t have an account
-          </Button>
-        </FormAuth>
-      </Grid>
-    </PaperAuth>
+            <Button
+              sx={{ mt: 1, color: theme.palette.secondary.main }}
+              fullWidth
+              type="submit"
+              variant="text"
+              component={NavLink}
+              to={RoutesPath.SIGNUP}
+            >
+              I don`t have an account
+            </Button>
+          </FormAuth>
+        </StyledGrid>
+      </PaperAuth>
+    </Box>
   );
 };
 
