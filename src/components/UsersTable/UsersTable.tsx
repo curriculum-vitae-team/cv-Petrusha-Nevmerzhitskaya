@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DELETE_USER } from '../../graphql/user/mutation';
 import { USERS } from '../../graphql/users/query';
-import Loader from '../Loader';
+import Preloader from '../Preloader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
 import { StyledTableBody, StyledTableCell } from './UsersTable.styles';
@@ -85,68 +85,65 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     navigate(`/employees/${selectedUser}/profile`);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
   return (
-    <>
-      <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
-        <MenuItem onClick={openProfile}>Profile</MenuItem>
-        <MenuItem onClick={deleteUser} disabled={!isUserAdmin}>
-          Delete user
-        </MenuItem>
-      </Menu>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell padding="checkbox" />
-              {headerLabels.map((label) => (
-                <StyledTableCell
-                  key={label.label}
-                  onClick={() => changeSort(label.value)}
-                >
-                  {label.label}
-                  {sorting.name === label.value &&
-                    (sorting.asc ? (
-                      <ArrowUpwardIcon fontSize="small" />
-                    ) : (
-                      <ArrowDownwardIcon fontSize="small" />
-                    ))}
-                </StyledTableCell>
-              ))}
-              <StyledTableCell padding="checkbox" />
-            </TableRow>
-          </TableHead>
-          <StyledTableBody>
-            {sortUsers(filterUsers(data.users, search), sorting).map((user) => (
-              <TableRow key={user.email}>
-                <TableCell>
-                  <Avatar alt="Avatar" src={user.profile.avatar} />
-                </TableCell>
-                <TableCell>{user.profile.first_name}</TableCell>
-                <TableCell>{user.profile.last_name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.department_name}</TableCell>
-                <TableCell>{user.position_name}</TableCell>
-                <TableCell>
-                  <IconButton
-                    onClick={(event) => handleMenuOpen(event, user.id)}
+    <Preloader loading={loading} error={error}>
+      <>
+        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
+          <MenuItem onClick={openProfile}>Profile</MenuItem>
+          <MenuItem onClick={deleteUser} disabled={!isUserAdmin}>
+            Delete user
+          </MenuItem>
+        </Menu>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell padding="checkbox" />
+                {headerLabels.map((label) => (
+                  <StyledTableCell
+                    key={label.label}
+                    onClick={() => changeSort(label.value)}
                   >
-                    <MoreVertIcon />
-                  </IconButton>
-                </TableCell>
+                    {label.label}
+                    {sorting.name === label.value &&
+                      (sorting.asc ? (
+                        <ArrowUpwardIcon fontSize="small" />
+                      ) : (
+                        <ArrowDownwardIcon fontSize="small" />
+                      ))}
+                  </StyledTableCell>
+                ))}
+                <StyledTableCell padding="checkbox" />
               </TableRow>
-            ))}
-          </StyledTableBody>
-        </Table>
-      </TableContainer>
-    </>
+            </TableHead>
+            <StyledTableBody>
+              {data?.users &&
+                sortUsers(filterUsers(data.users, search), sorting).map(
+                  (user) => (
+                    <TableRow key={user.email}>
+                      <TableCell>
+                        <Avatar alt="Avatar" src={user.profile.avatar} />
+                      </TableCell>
+                      <TableCell>{user.profile.first_name}</TableCell>
+                      <TableCell>{user.profile.last_name}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.department_name}</TableCell>
+                      <TableCell>{user.position_name}</TableCell>
+                      <TableCell>
+                        <IconButton
+                          onClick={(event) => handleMenuOpen(event, user.id)}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+            </StyledTableBody>
+          </Table>
+        </TableContainer>
+      </>
+    </Preloader>
   );
 };
 

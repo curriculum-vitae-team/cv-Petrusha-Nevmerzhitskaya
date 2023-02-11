@@ -1,10 +1,9 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Box } from '@mui/material';
-import { ChangeEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import EmployeeTabs from '../../components/EmployeeTabs';
-import Loader from '../../components/Loader';
+import Preloader from '../../components/Preloader';
 import UserProfileForm from '../../components/UserProfileForm';
 import UserProfileHeader from '../../components/UserProfileHeader';
 import { authService } from '../../graphql/auth/authService';
@@ -93,8 +92,8 @@ const EmployeeProfilePage: React.FC = () => {
     });
   };
 
-  const uploadAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const uploadAvatar = async (files: FileList | null) => {
+    const file = files?.[0];
     if (file) {
       const base64 = await convertBase64(file);
 
@@ -111,36 +110,28 @@ const EmployeeProfilePage: React.FC = () => {
     }
   };
 
-  if (
-    loading ||
-    updateUserLoading ||
-    deleteAvatarLoading ||
-    uploadAvatarLoading
-  ) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
+  const isLoading =
+    loading || updateUserLoading || deleteAvatarLoading || uploadAvatarLoading;
 
   return (
-    <>
-      <EmployeeTabs />
-      <Box width="50%" margin="auto" marginY={6}>
-        <UserProfileHeader
-          user={user}
-          ableToEdit={ableToEdit}
-          deleteAvatar={deleteAvatar}
-          uploadAvatar={uploadAvatar}
-        />
-        <UserProfileForm
-          user={user}
-          ableToEdit={ableToEdit}
-          updateUser={updateUser}
-        />
-      </Box>
-    </>
+    <Preloader loading={isLoading} error={error}>
+      <>
+        <EmployeeTabs />
+        <Box width="50%" margin="auto" marginY={6}>
+          <UserProfileHeader
+            user={user}
+            ableToEdit={ableToEdit}
+            deleteAvatar={deleteAvatar}
+            uploadAvatar={uploadAvatar}
+          />
+          <UserProfileForm
+            user={user}
+            ableToEdit={ableToEdit}
+            updateUser={updateUser}
+          />
+        </Box>
+      </>
+    </Preloader>
   );
 };
 

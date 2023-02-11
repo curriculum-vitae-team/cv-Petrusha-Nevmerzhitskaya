@@ -23,7 +23,19 @@ export const StyledBox = styled(Box)({
   alignItems: 'center'
 });
 
+export const StyledDragDrop = styled(Box)({
+  position: 'absolute',
+  width: '100%',
+  height: '100%',
+  top: 0,
+  left: 0
+});
+
 export const StyledTypography = styled(Typography)({
   display: 'flex',
   alignItems: 'center'
+});
+
+export const StyledForm = styled('form')({
+  position: 'relative'
 });

@@ -8,7 +8,7 @@ import { IFormInput } from '../../graphql/user/IFormInput';
 import { IDepartment } from '../../interfaces/IDepartment';
 import { IPosition } from '../../interfaces/IPosition';
 import { IUser } from '../../interfaces/IUser';
-import Loader from '../Loader';
+import Preloader from '../Preloader';
 import {
   StyledBox,
   StyledButton,
@@ -47,81 +47,74 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
     updateUser(data);
   };
 
-  if (positionsLoading || departmentsLoading) {
-    return <Loader />;
-  }
-
-  if (positionsError) {
-    return <div>{positionsError.message}</div>;
-  }
-
-  if (departmentsError) {
-    return <div>{departmentsError.message}</div>;
-  }
-
   return (
-    <StyledBox marginY={6} component="form" onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
-        <InputLabel htmlFor="first-name">First name</InputLabel>
-        <StyledOutlinedInput
-          id="first-name"
-          label="First name"
+    <Preloader
+      loading={positionsLoading || departmentsLoading}
+      error={positionsError || departmentsError}
+    >
+      <StyledBox marginY={6} component="form" onSubmit={handleSubmit(onSubmit)}>
+        <FormControl>
+          <InputLabel htmlFor="first-name">First name</InputLabel>
+          <StyledOutlinedInput
+            id="first-name"
+            label="First name"
+            disabled={!ableToEdit}
+            {...register('firstName')}
+          />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="last-name">Last name</InputLabel>
+          <StyledOutlinedInput
+            id="last-name"
+            label="Last name"
+            disabled={!ableToEdit}
+            {...register('lastName')}
+          />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="department">Department</InputLabel>
+          <StyledSelect
+            id="department"
+            label="Department"
+            defaultValue={user?.department?.id}
+            disabled={!ableToEdit}
+            {...register('department')}
+          >
+            <MenuItem value="">No department</MenuItem>
+            {departmentsData?.departments.map(({ id, name }) => (
+              <MenuItem key={name} value={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </StyledSelect>
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="position">Position</InputLabel>
+          <StyledSelect
+            id="position"
+            label="Position"
+            defaultValue={user?.position?.id}
+            disabled={!ableToEdit}
+            {...register('position')}
+          >
+            <MenuItem value="">No position</MenuItem>
+            {positionsData?.positions.map(({ id, name }) => (
+              <MenuItem key={name} value={id}>
+                {name}
+              </MenuItem>
+            ))}
+          </StyledSelect>
+        </FormControl>
+        <StyledButton
+          variant="contained"
+          color="secondary"
+          type="submit"
           disabled={!ableToEdit}
-          {...register('firstName')}
-        />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="last-name">Last name</InputLabel>
-        <StyledOutlinedInput
-          id="last-name"
-          label="Last name"
-          disabled={!ableToEdit}
-          {...register('lastName')}
-        />
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="department">Department</InputLabel>
-        <StyledSelect
-          id="department"
-          label="Department"
-          defaultValue={user?.department?.id}
-          disabled={!ableToEdit}
-          {...register('department')}
         >
-          <MenuItem value="">No department</MenuItem>
-          {departmentsData?.departments.map(({ id, name }) => (
-            <MenuItem key={name} value={id}>
-              {name}
-            </MenuItem>
-          ))}
-        </StyledSelect>
-      </FormControl>
-      <FormControl>
-        <InputLabel htmlFor="position">Position</InputLabel>
-        <StyledSelect
-          id="position"
-          label="Position"
-          defaultValue={user?.position?.id}
-          disabled={!ableToEdit}
-          {...register('position')}
-        >
-          <MenuItem value="">No position</MenuItem>
-          {positionsData?.positions.map(({ id, name }) => (
-            <MenuItem key={name} value={id}>
-              {name}
-            </MenuItem>
-          ))}
-        </StyledSelect>
-      </FormControl>
-      <StyledButton
-        variant="contained"
-        color="secondary"
-        type="submit"
-        disabled={!ableToEdit}
-      >
-        Save
-      </StyledButton>
-    </StyledBox>
+          Save
+        </StyledButton>
+      </StyledBox>
+    </Preloader>
   );
 };
 

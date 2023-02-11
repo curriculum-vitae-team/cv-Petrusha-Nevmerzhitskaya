@@ -4,17 +4,22 @@ import Logout from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { authService } from '../../graphql/auth/authService';
 import { IUserResult } from '../../graphql/user/IUserResult';
 import { USER } from '../../graphql/user/query';
 import theme from '../../themes/theme';
-import Loader from '../Loader';
+import Preloader from '../Preloader';
 import { IconStyles, StyledAvatar, UserMenuWrap } from './UserMenu.styles';
 
 export const UserMenu = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement | undefined>(
+    null
+  );
+
   const userData = useReactiveVar(authService.user$);
 
   const { loading, error, data } = useQuery<IUserResult>(USER, {
@@ -34,50 +39,50 @@ export const UserMenu = () => {
     authService.clearStorage();
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
+  const openProfile = () => {
+    navigate(`/employees/${user?.id}/profile`);
+  };
 
   return (
-    <>
-      <UserMenuWrap>
-        <Typography>{user?.profile.full_name || user?.email}</Typography>
-        <IconButton onClick={handleClick} size="large">
-          <StyledAvatar src={user?.profile.avatar} alt="user avatar">
-            {user?.email[0].toUpperCase()}
-          </StyledAvatar>
-        </IconButton>
-      </UserMenuWrap>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 24,
-          sx: { minWidth: 200, mt: 1, color: theme.palette.primary.light }
-        }}
-      >
-        <MenuItem>
-          <AccountCircleIcon sx={IconStyles} />
-          Profile
-        </MenuItem>
+    <Preloader loading={loading} error={error}>
+      <>
+        <UserMenuWrap>
+          <Typography>{user?.profile.full_name || user?.email}</Typography>
+          <IconButton onClick={handleClick} size="large">
+            <StyledAvatar src={user?.profile.avatar} alt="user avatar">
+              {user?.email[0].toUpperCase()}
+            </StyledAvatar>
+          </IconButton>
+        </UserMenuWrap>
+        {!!anchorEl && (
+          <Menu
+            anchorEl={anchorEl}
+            open={!!anchorEl}
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 24,
+              sx: { minWidth: 200, mt: 1, color: theme.palette.primary.light }
+            }}
+          >
+            <MenuItem onClick={openProfile}>
+              <AccountCircleIcon sx={IconStyles} />
+              Profile
+            </MenuItem>
 
-        <MenuItem>
-          <SettingsIcon sx={IconStyles} />
-          Setting
-        </MenuItem>
+            <MenuItem>
+              <SettingsIcon sx={IconStyles} />
+              Setting
+            </MenuItem>
 
-        <Divider />
+            <Divider />
 
-        <MenuItem onClick={handleLogout}>
-          <Logout sx={IconStyles} />
-          Logout
-        </MenuItem>
-      </Menu>
-    </>
+            <MenuItem onClick={handleLogout}>
+              <Logout sx={IconStyles} />
+              Logout
+            </MenuItem>
+          </Menu>
+        )}
+      </>
+    </Preloader>
   );
 };
