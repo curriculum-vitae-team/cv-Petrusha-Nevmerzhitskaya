@@ -31,7 +31,7 @@
     "react/jsx-no-constructed-context-values": 0,
     "react/prop-types": 0,
     "no-shadow": "off",
-    "no-console": 0,
+    "no-console": "warn",
     "react/jsx-no-bind": 0,
     "react-hooks/exhaustive-deps": 0,
     "@typescript-eslint/no-shadow": 0,

@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Preloader: React.FC<Props> = ({ loading, error, children }) => {
-  console.log(loading, error);
   if (loading) {
     return (
       <StyledBox margin={5}>

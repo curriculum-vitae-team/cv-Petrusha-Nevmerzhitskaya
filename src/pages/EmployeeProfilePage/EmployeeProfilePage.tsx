@@ -1,25 +1,19 @@
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Box } from '@mui/material';
-import { useLocation } from 'react-router-dom';
 
 import EmployeeTabs from '../../components/EmployeeTabs';
 import Preloader from '../../components/Preloader';
 import UserProfileForm from '../../components/UserProfileForm';
 import UserProfileHeader from '../../components/UserProfileHeader';
-import { authService } from '../../graphql/auth/authService';
 import { IFormInput } from '../../graphql/user/IFormInput';
-import { IUserResult } from '../../graphql/user/IUserResult';
 import {
   DELETE_AVATAR,
   UPDATE_USER,
   UPLOAD_AVATAR
 } from '../../graphql/user/mutation';
 import { USER } from '../../graphql/user/query';
-import { IUser } from '../../interfaces/IUser';
-import isAdmin from '../../utils/isAdmin';
-
-const isAbleToEdit = (loggedUser: IUser | null, user?: IUser) =>
-  user?.id === loggedUser?.id || isAdmin(loggedUser);
+import useUserData from '../../hooks/useUserData';
+import isAbleToEdit from '../../utils/isAbleToEdit';
 
 const convertBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -37,15 +31,7 @@ const convertBase64 = (file: File) => {
 };
 
 const EmployeeProfilePage: React.FC = () => {
-  const location = useLocation();
-  const userId = location.pathname.split('/')[2];
-
-  const { loading, error, data } = useQuery<IUserResult>(USER, {
-    variables: { id: userId }
-  });
-  const user = data?.user;
-
-  const loggedUser = useReactiveVar(authService.user$);
+  const { user, loggedUser, loading, error } = useUserData();
 
   const ableToEdit = isAbleToEdit(loggedUser, user);
 
@@ -117,7 +103,7 @@ const EmployeeProfilePage: React.FC = () => {
     <Preloader loading={isLoading} error={error}>
       <>
         <EmployeeTabs />
-        <Box width="50%" margin="auto" marginY={6}>
+        <Box width={750} margin="auto" marginY={6}>
           <UserProfileHeader
             user={user}
             ableToEdit={ableToEdit}
