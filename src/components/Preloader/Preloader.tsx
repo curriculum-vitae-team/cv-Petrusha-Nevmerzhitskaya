@@ -6,7 +6,7 @@ import { StyledBox } from './Preloader.styles';
 interface Props {
   loading: boolean;
   error?: ApolloError;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 const Preloader: React.FC<Props> = ({ loading, error, children }) => {
@@ -22,7 +22,8 @@ const Preloader: React.FC<Props> = ({ loading, error, children }) => {
     return <StyledBox margin={5}>{error.message}</StyledBox>;
   }
 
-  return children;
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{children}</>;
 };
 
 export default Preloader;
