@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { FormControl, InputLabel, MenuItem } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 
 import { DEPARTMENTS } from '../../graphql/departments/query';
 import { POSITIONS } from '../../graphql/positions/query';
@@ -22,6 +23,18 @@ interface Props {
   updateUser: (data: IFormInput) => void;
 }
 
+type FieldNames = 'department' | 'position' | 'firstName' | 'lastName';
+
+interface Render {
+  field: ControllerRenderProps<IFormInput, FieldNames>;
+}
+
+interface FormField {
+  name: FieldNames;
+  defaultValue?: string;
+  render: (renderParam: Render) => JSX.Element;
+}
+
 const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
   const {
     loading: departmentsLoading,
@@ -34,43 +47,54 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
     data: positionsData
   } = useQuery<{ positions: IPosition[] }>(POSITIONS);
 
-  const { register, handleSubmit } = useForm<IFormInput>({
-    defaultValues: {
-      firstName: user?.profile.first_name,
-      lastName: user?.profile.last_name,
-      department: user?.department?.id,
-      position: user?.position?.id
-    }
-  });
+  const { control, handleSubmit, setValue } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
     updateUser(data);
   };
 
-  return (
-    <Preloader
-      loading={positionsLoading || departmentsLoading}
-      error={positionsError || departmentsError}
-    >
-      <StyledBox marginY={6} component="form" onSubmit={handleSubmit(onSubmit)}>
+  useEffect(() => {
+    setValue('firstName', user?.profile.first_name || '');
+    setValue('lastName', user?.profile.last_name || '');
+    setValue('department', user?.department?.id || '');
+    setValue('position', user?.position?.id || '');
+  }, [user]);
+
+  const formFields: FormField[] = [
+    {
+      name: 'firstName',
+      defaultValue: user?.profile.first_name,
+      render: ({ field }: Render) => (
         <FormControl>
           <InputLabel htmlFor="first-name">First name</InputLabel>
           <StyledOutlinedInput
             id="first-name"
             label="First name"
             disabled={!ableToEdit}
-            {...register('firstName')}
+            {...field}
           />
         </FormControl>
+      )
+    },
+    {
+      name: 'lastName',
+      defaultValue: user?.profile.last_name,
+      render: ({ field }: Render) => (
         <FormControl>
           <InputLabel htmlFor="last-name">Last name</InputLabel>
           <StyledOutlinedInput
             id="last-name"
             label="Last name"
             disabled={!ableToEdit}
-            {...register('lastName')}
+            {...field}
           />
         </FormControl>
+      )
+    },
+    {
+      name: 'department',
+      defaultValue: user?.department?.id,
+      render: ({ field }: Render) => (
         <FormControl>
           <InputLabel htmlFor="department">Department</InputLabel>
           <StyledSelect
@@ -78,7 +102,7 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
             label="Department"
             defaultValue={user?.department?.id}
             disabled={!ableToEdit}
-            {...register('department')}
+            {...field}
           >
             <MenuItem value="">No department</MenuItem>
             {departmentsData?.departments.map(({ id, name }) => (
@@ -88,6 +112,12 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
             ))}
           </StyledSelect>
         </FormControl>
+      )
+    },
+    {
+      name: 'position',
+      defaultValue: user?.position?.id,
+      render: ({ field }: Render) => (
         <FormControl>
           <InputLabel htmlFor="position">Position</InputLabel>
           <StyledSelect
@@ -95,7 +125,7 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
             label="Position"
             defaultValue={user?.position?.id}
             disabled={!ableToEdit}
-            {...register('position')}
+            {...field}
           >
             <MenuItem value="">No position</MenuItem>
             {positionsData?.positions.map(({ id, name }) => (
@@ -105,6 +135,19 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
             ))}
           </StyledSelect>
         </FormControl>
+      )
+    }
+  ];
+
+  return (
+    <Preloader
+      loading={positionsLoading || departmentsLoading}
+      error={positionsError || departmentsError}
+    >
+      <StyledBox marginY={6} component="form" onSubmit={handleSubmit(onSubmit)}>
+        {formFields.map((field) => (
+          <Controller key={field.name} control={control} {...field} />
+        ))}
         <StyledButton
           variant="contained"
           color="secondary"
