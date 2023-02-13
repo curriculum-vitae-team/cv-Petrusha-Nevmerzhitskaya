@@ -2,8 +2,8 @@ import { useMutation } from '@apollo/client';
 import { Box, Chip, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import EmployeeTabs from '../../components/EmployeeTabs';
 import Preloader from '../../components/Preloader';
+import ProfileLayout from '../../components/ProfileLayout';
 import { UPDATE_USER } from '../../graphql/user/mutation';
 import { USER } from '../../graphql/user/query';
 import useUserData from '../../hooks/useUserData';
@@ -64,9 +64,8 @@ const EmployeeSkillsPage: React.FC = () => {
 
   return (
     <Preloader loading={loading || updateUserLoading} error={error}>
-      <>
-        <EmployeeTabs />
-        <Box width={750} margin="auto" marginY={6}>
+      <ProfileLayout>
+        <>
           <Box>
             {user?.profile.skills.map((skill) => (
               <StyledBox key={skill.skill_name}>
@@ -112,8 +111,8 @@ const EmployeeSkillsPage: React.FC = () => {
               </StyledButton>
             </StyledForm>
           )}
-        </Box>
-      </>
+        </>
+      </ProfileLayout>
     </Preloader>
   );
 };

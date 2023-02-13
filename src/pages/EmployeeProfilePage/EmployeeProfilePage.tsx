@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { Box } from '@mui/material';
 
-import EmployeeTabs from '../../components/EmployeeTabs';
 import Preloader from '../../components/Preloader';
+import ProfileLayout from '../../components/ProfileLayout';
 import UserProfileForm from '../../components/UserProfileForm';
 import UserProfileHeader from '../../components/UserProfileHeader';
 import { IFormInput } from '../../graphql/user/IFormInput';
@@ -101,22 +100,19 @@ const EmployeeProfilePage: React.FC = () => {
 
   return (
     <Preloader loading={isLoading} error={error}>
-      <>
-        <EmployeeTabs />
-        <Box width={750} margin="auto" marginY={6}>
-          <UserProfileHeader
-            user={user}
-            ableToEdit={ableToEdit}
-            deleteAvatar={deleteAvatar}
-            uploadAvatar={uploadAvatar}
-          />
-          <UserProfileForm
-            user={user}
-            ableToEdit={ableToEdit}
-            updateUser={updateUser}
-          />
-        </Box>
-      </>
+      <ProfileLayout>
+        <UserProfileHeader
+          user={user}
+          ableToEdit={ableToEdit}
+          deleteAvatar={deleteAvatar}
+          uploadAvatar={uploadAvatar}
+        />
+        <UserProfileForm
+          user={user}
+          ableToEdit={ableToEdit}
+          updateUser={updateUser}
+        />
+      </ProfileLayout>
     </Preloader>
   );
 };
