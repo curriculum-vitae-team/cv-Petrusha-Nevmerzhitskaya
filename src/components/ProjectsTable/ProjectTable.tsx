@@ -17,7 +17,7 @@ import { useState } from 'react';
 
 import { DELETE_PROJECT } from '../../graphql/projects/mutation';
 import { PROJECTS } from '../../graphql/projects/query';
-import Loader from '../Loader';
+import Preloader from '../Preloader';
 import {
   StyledTableBody,
   StyledTableCell
@@ -91,71 +91,68 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     });
   };
 
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
   return (
-    <>
-      <Menu
-        anchorEl={anchorEl.anchor}
-        open={!!anchorEl.anchor}
-        onClose={handleMenuClose}
-      >
-        <MenuItem>Project</MenuItem>
-        <MenuItem onClick={deleteProject} disabled={!isUserAdmin}>
-          Delete project
-        </MenuItem>
-      </Menu>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {headerLabels.map((label) => (
-                <StyledTableCell
-                  key={label.label}
-                  onClick={() => changeSort(label.value)}
-                >
-                  {label.label}
-                  {sorting.name === label.value &&
-                    (sorting.asc ? (
-                      <ArrowUpwardIcon fontSize="small" />
-                    ) : (
-                      <ArrowDownwardIcon fontSize="small" />
-                    ))}
-                </StyledTableCell>
-              ))}
-              <StyledTableCell padding="checkbox" />
-            </TableRow>
-          </TableHead>
-          <StyledTableBody>
-            {sortUsers(filterUsers(data.projects, search), sorting).map(
-              (project) => (
-                <TableRow key={project.id}>
-                  <TableCell>{project.name}</TableCell>
-                  <TableCell>{project.internal_name}</TableCell>
-                  <TableCell>{project.domain}</TableCell>
-                  <TableCell>{project.start_date}</TableCell>
-                  <TableCell>{project.end_date || 'Till now'}</TableCell>
-                  <TableCell>{project.team_size}</TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <MoreVertIcon
-                        onClick={(event) => handleMenuOpen(event, project.id)}
-                      />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              )
-            )}
-          </StyledTableBody>
-        </Table>
-      </TableContainer>
-    </>
+    <Preloader loading={loading} error={error}>
+      <>
+        <Menu
+          anchorEl={anchorEl.anchor}
+          open={!!anchorEl.anchor}
+          onClose={handleMenuClose}
+        >
+          <MenuItem>Project</MenuItem>
+          <MenuItem onClick={deleteProject} disabled={!isUserAdmin}>
+            Delete project
+          </MenuItem>
+        </Menu>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {headerLabels.map((label) => (
+                  <StyledTableCell
+                    key={label.label}
+                    onClick={() => changeSort(label.value)}
+                  >
+                    {label.label}
+                    {sorting.name === label.value &&
+                      (sorting.asc ? (
+                        <ArrowUpwardIcon fontSize="small" />
+                      ) : (
+                        <ArrowDownwardIcon fontSize="small" />
+                      ))}
+                  </StyledTableCell>
+                ))}
+                <StyledTableCell padding="checkbox" />
+              </TableRow>
+            </TableHead>
+            <StyledTableBody>
+              {data &&
+                sortUsers(filterUsers(data.projects, search), sorting).map(
+                  (project) => (
+                    <TableRow key={project.id}>
+                      <TableCell>{project.name}</TableCell>
+                      <TableCell>{project.internal_name}</TableCell>
+                      <TableCell>{project.domain}</TableCell>
+                      <TableCell>{project.start_date}</TableCell>
+                      <TableCell>{project.end_date || 'Till now'}</TableCell>
+                      <TableCell>{project.team_size}</TableCell>
+                      <TableCell>
+                        <IconButton>
+                          <MoreVertIcon
+                            onClick={(event) =>
+                              handleMenuOpen(event, project.id)
+                            }
+                          />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+            </StyledTableBody>
+          </Table>
+        </TableContainer>
+      </>
+    </Preloader>
   );
 };
 
