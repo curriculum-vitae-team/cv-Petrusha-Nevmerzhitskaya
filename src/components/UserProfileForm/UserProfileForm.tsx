@@ -3,12 +3,12 @@ import { FormControl, InputLabel, MenuItem } from '@mui/material';
 import { useEffect } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 
-import { DEPARTMENTS } from '../../graphql/departments/query';
-import { POSITIONS } from '../../graphql/positions/query';
-import { IFormInput } from '../../graphql/user/IFormInput';
-import { IDepartment } from '../../interfaces/IDepartment';
-import { IPosition } from '../../interfaces/IPosition';
-import { IUser } from '../../interfaces/IUser';
+import { DEPARTMENTS } from '@graphql/departments/query';
+import { POSITIONS } from '@graphql/positions/query';
+import { IFormInput } from '@graphql/user/IFormInput';
+import { IDepartment } from '@interfaces/IDepartment';
+import { IPosition } from '@interfaces/IPosition';
+import { IUser } from '@interfaces/IUser';
 import Preloader from '../Preloader';
 import {
   StyledBox,

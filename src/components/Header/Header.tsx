@@ -2,7 +2,7 @@ import { useReactiveVar } from '@apollo/client';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 
-import { authService } from '../../graphql/auth/authService';
+import { authService } from '@graphql/auth/authService';
 import { AuthHeader } from '../AuthHeader';
 import { HeaderBreadcrumbs } from '../Breadcrumbs/Bredcrumbs';
 import { SideMenu } from '../SideMenu';

@@ -2,12 +2,12 @@ import { useMutation } from '@apollo/client';
 import { Box, Chip, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import Preloader from '../../components/Preloader';
-import ProfileLayout from '../../components/ProfileLayout';
-import { UPDATE_USER } from '../../graphql/user/mutation';
-import { USER } from '../../graphql/user/query';
-import useUserData from '../../hooks/useUserData';
-import isAbleToEdit from '../../utils/isAbleToEdit';
+import Preloader from '@components/Preloader';
+import ProfileLayout from '@components/ProfileLayout';
+import { UPDATE_USER } from '@graphql/user/mutation';
+import { USER } from '@graphql/user/query';
+import useUserData from '@hooks/useUserData';
+import isAbleToEdit from '@utils/isAbleToEdit';
 import {
   StyledBox,
   StyledButton,

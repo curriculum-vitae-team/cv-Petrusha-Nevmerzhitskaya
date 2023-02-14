@@ -1,4 +1,4 @@
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '@interfaces/IUser';
 import { SortingType } from './types';
 
 export const sortUsers = (users: IUser[], sorting: SortingType) => {

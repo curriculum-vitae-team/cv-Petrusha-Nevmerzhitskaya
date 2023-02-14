@@ -3,9 +3,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { FormControl, InputAdornment, InputLabel } from '@mui/material';
 import { useState } from 'react';
 
-import UsersTable from '../../components/UsersTable';
-import { authService } from '../../graphql/auth/authService';
-import isAdmin from '../../utils/isAdmin';
+import UsersTable from '@components/UsersTable';
+import { authService } from '@graphql/auth/authService';
+import isAdmin from '@utils/isAdmin';
 import {
   StyledBox,
   StyledButton,

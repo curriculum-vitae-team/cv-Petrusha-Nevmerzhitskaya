@@ -6,12 +6,12 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 
-import { RoutesPath } from '../../constants/routes';
-import { authService } from '../../graphql/auth/authService';
-import { ISignupResult } from '../../graphql/auth/IAuthResult';
-import { IFormInput } from '../../graphql/auth/IFormInput';
-import { SIGNUP } from '../../graphql/auth/mutation';
-import theme from '../../themes/theme';
+import { RoutesPath } from '@constants/routes';
+import { authService } from '@graphql/auth/authService';
+import { ISignupResult } from '@graphql/auth/IAuthResult';
+import { IFormInput } from '@graphql/auth/IFormInput';
+import { SIGNUP } from '@graphql/auth/mutation';
+import theme from '@themes/theme';
 import { schema } from '../LoginPage/validationSchema';
 import {
   FormAuth,

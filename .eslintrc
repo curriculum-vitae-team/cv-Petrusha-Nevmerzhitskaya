@@ -20,11 +20,9 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
+  "plugins": ["react", "@typescript-eslint", "prettier",  "import"],
   "rules": {
     "prettier/prettier": "error",
-    "simple-import-sort/imports": "error",
-    "simple-import-sort/exports": "error",
     "react/jsx-uses-react": ["off"],
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["off"],
@@ -41,6 +39,55 @@
     "react/function-component-definition": 0,
     "no-param-reassign": 0,
     "import/prefer-default-export": 0,
-    "import/no-cycle": 0
+    "import/no-cycle": 0,
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+        "pathGroups": [
+          {
+            "pattern": "@components/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@constants/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@graphql/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@hooks/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@interfaces/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@pages/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@route/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@themes/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": []
+      }
+    ]
   }
 }

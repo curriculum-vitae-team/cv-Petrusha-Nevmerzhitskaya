@@ -1,8 +1,8 @@
 import { Tab, Tabs } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
-import { RoutesPath } from '../../constants/routes';
-import theme from '../../themes/theme';
+import { RoutesPath } from '@constants/routes';
+import theme from '@themes/theme';
 import { StyledBox, StyledNavLink } from './AuthHeader.styles';
 
 export const AuthHeader = () => {
