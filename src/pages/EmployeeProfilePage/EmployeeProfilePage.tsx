@@ -108,6 +108,7 @@ const EmployeeProfilePage: React.FC = () => {
           uploadAvatar={uploadAvatar}
         />
         <UserProfileForm
+          key={user?.id}
           user={user}
           ableToEdit={ableToEdit}
           updateUser={updateUser}

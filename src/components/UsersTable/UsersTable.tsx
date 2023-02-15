@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -17,8 +17,11 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { authService } from '../../graphql/auth/authService';
 import { DELETE_USER } from '../../graphql/user/mutation';
 import { USERS } from '../../graphql/users/query';
+import { IUser } from '../../interfaces/IUser';
+import ConfirmDialog from '../ConfirmDialog';
 import Preloader from '../Preloader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
@@ -45,15 +48,20 @@ interface Props {
 const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
   const navigate = useNavigate();
 
+  const curUser = useReactiveVar(authService.user$);
+
   const { loading, error, data } = useQuery(USERS);
-  const [deleteUserMutation] = useMutation<{ affected: number }>(DELETE_USER);
+  const [deleteUserMutation] = useMutation<{ affected: number }>(DELETE_USER, {
+    refetchQueries: [{ query: USERS }]
+  });
 
   const [sorting, setSorting] = useState<SortingType>({
     name: 'department_name',
     asc: true
   });
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
+  const [confirmOpened, setConfirmOpened] = useState(false);
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -62,10 +70,10 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
 
   const handleMenuOpen = (
     event: React.MouseEvent<HTMLButtonElement>,
-    userId: string
+    user: IUser
   ) => {
     setAnchorEl(event.currentTarget);
-    setSelectedUser(userId);
+    setSelectedUser(user);
   };
 
   const changeSort = (label: LabelsType) => {
@@ -75,24 +83,45 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     }));
   };
 
+  const deleteUserClick = () => {
+    setConfirmOpened(true);
+    setAnchorEl(null);
+  };
+
+  const closeConfirm = () => {
+    setConfirmOpened(false);
+  };
+
   const deleteUser = async () => {
     await deleteUserMutation({
-      variables: { id: selectedUser }
+      variables: { id: selectedUser?.id }
     });
+
+    closeConfirm();
   };
 
   const openProfile = () => {
-    navigate(`/employees/${selectedUser}/profile`);
+    navigate(`/employees/${selectedUser?.id}/profile`);
   };
 
   return (
     <Preloader loading={loading} error={error}>
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleMenuClose}>
         <MenuItem onClick={openProfile}>Profile</MenuItem>
-        <MenuItem onClick={deleteUser} disabled={!isUserAdmin}>
+        <MenuItem
+          onClick={deleteUserClick}
+          disabled={!isUserAdmin || selectedUser?.id === curUser?.id}
+        >
           Delete user
         </MenuItem>
       </Menu>
+      <ConfirmDialog
+        opened={confirmOpened}
+        close={closeConfirm}
+        confirm={deleteUser}
+        titleText="Delete User"
+        contentText={`Are you sure you want to delete user ${selectedUser?.email}?`}
+      />
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -130,7 +159,7 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                     <TableCell>{user.position_name}</TableCell>
                     <TableCell>
                       <IconButton
-                        onClick={(event) => handleMenuOpen(event, user.id)}
+                        onClick={(event) => handleMenuOpen(event, user)}
                       >
                         <MoreVertIcon />
                       </IconButton>
