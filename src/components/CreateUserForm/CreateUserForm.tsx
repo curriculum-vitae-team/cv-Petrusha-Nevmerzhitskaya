@@ -41,7 +41,7 @@ const UserProfileForm: React.FC<Props> = ({ close, confirm, opened }) => {
     ICvsResult
   >(CVS);
 
-  const { control, handleSubmit, watch } = useForm<IFormInput>();
+  const { control, handleSubmit, watch, reset } = useForm<IFormInput>();
 
   const watchEmail = watch('email');
   const watchPassword = watch('password') || '';
@@ -78,6 +78,8 @@ const UserProfileForm: React.FC<Props> = ({ close, confirm, opened }) => {
         }
       }
     });
+
+    reset();
   };
 
   return (
