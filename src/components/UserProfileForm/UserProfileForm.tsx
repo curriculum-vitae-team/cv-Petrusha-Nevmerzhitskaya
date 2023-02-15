@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { FormControl, InputLabel, MenuItem } from '@mui/material';
 import { useEffect } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 
@@ -9,13 +8,10 @@ import { IFormInput } from '../../graphql/user/IFormInput';
 import { IDepartment } from '../../interfaces/IDepartment';
 import { IPosition } from '../../interfaces/IPosition';
 import { IUser } from '../../interfaces/IUser';
+import CustomSelect from '../CustomSelect';
+import CustomTextField from '../CustomTextField';
 import Preloader from '../Preloader';
-import {
-  StyledBox,
-  StyledButton,
-  StyledOutlinedInput,
-  StyledSelect
-} from './UserProfileForm.styles';
+import { StyledBox, StyledButton } from './UserProfileForm.styles';
 
 interface Props {
   user?: IUser;
@@ -65,76 +61,62 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
       name: 'firstName',
       defaultValue: user?.profile.first_name,
       render: ({ field }: Render) => (
-        <FormControl>
-          <InputLabel htmlFor="first-name">First name</InputLabel>
-          <StyledOutlinedInput
-            id="first-name"
-            label="First name"
-            disabled={!ableToEdit}
-            {...field}
-          />
-        </FormControl>
+        <CustomTextField
+          label="First name"
+          props={{ ...field, disabled: !ableToEdit }}
+        />
       )
     },
     {
       name: 'lastName',
       defaultValue: user?.profile.last_name,
       render: ({ field }: Render) => (
-        <FormControl>
-          <InputLabel htmlFor="last-name">Last name</InputLabel>
-          <StyledOutlinedInput
-            id="last-name"
-            label="Last name"
-            disabled={!ableToEdit}
-            {...field}
-          />
-        </FormControl>
+        <CustomTextField
+          label="Last name"
+          props={{ ...field, disabled: !ableToEdit }}
+        />
       )
     },
     {
       name: 'department',
       defaultValue: user?.department?.id,
       render: ({ field }: Render) => (
-        <FormControl>
-          <InputLabel htmlFor="department">Department</InputLabel>
-          <StyledSelect
-            id="department"
-            label="Department"
-            defaultValue={user?.department?.id}
-            disabled={!ableToEdit}
-            {...field}
-          >
-            <MenuItem value="">No department</MenuItem>
-            {departmentsData?.departments.map(({ id, name }) => (
-              <MenuItem key={name} value={id}>
-                {name}
-              </MenuItem>
-            ))}
-          </StyledSelect>
-        </FormControl>
+        <CustomSelect
+          label="Department"
+          props={{
+            ...field,
+            defaultValue: user?.department?.id,
+            disabled: !ableToEdit
+          }}
+          options={[
+            { value: '', label: 'No department' },
+            ...(departmentsData?.departments.map(({ id, name }) => ({
+              value: id,
+              label: name
+            })) || [])
+          ]}
+        />
       )
     },
     {
       name: 'position',
       defaultValue: user?.position?.id,
       render: ({ field }: Render) => (
-        <FormControl>
-          <InputLabel htmlFor="position">Position</InputLabel>
-          <StyledSelect
-            id="position"
-            label="Position"
-            defaultValue={user?.position?.id}
-            disabled={!ableToEdit}
-            {...field}
-          >
-            <MenuItem value="">No position</MenuItem>
-            {positionsData?.positions.map(({ id, name }) => (
-              <MenuItem key={name} value={id}>
-                {name}
-              </MenuItem>
-            ))}
-          </StyledSelect>
-        </FormControl>
+        <CustomSelect
+          label="Department"
+          props={{
+            ...field,
+            defaultValue: user?.position?.id,
+            disabled: !ableToEdit
+          }}
+          options={[
+            { value: '', label: 'No position' },
+            ...(positionsData?.positions.map(({ id, name }) => ({
+              value: id,
+              label: name
+            })) || [])
+          ]}
+        />
       )
     }
   ];

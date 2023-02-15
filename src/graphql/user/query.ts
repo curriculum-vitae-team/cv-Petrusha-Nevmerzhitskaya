@@ -28,6 +28,10 @@ export const USER = gql`
         created_at
         name
         description
+        user {
+          id
+          email
+        }
         projects {
           id
           created_at
