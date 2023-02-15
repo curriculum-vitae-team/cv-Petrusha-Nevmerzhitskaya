@@ -14,7 +14,9 @@ import {
   TableRow
 } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { RoutesPath } from '../../constants/routes';
 import { DELETE_PROJECT } from '../../graphql/projects/mutation';
 import { PROJECTS } from '../../graphql/projects/query';
 import Preloader from '../Preloader';
@@ -60,6 +62,8 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     DELETE_PROJECT
   );
 
+  const navigate = useNavigate();
+
   const [sorting, setSorting] = useState<SortingType>({
     name: 'internal_name',
     asc: true
@@ -85,6 +89,10 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
     }));
   };
 
+  const handleGoToProject = () => {
+    navigate(`${RoutesPath.PROJECTS}/${anchorEl.Id}`);
+  };
+
   const deleteProject = async () => {
     await deleteProjectMutation({
       variables: { id: anchorEl.Id }
@@ -99,7 +107,7 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
           open={!!anchorEl.anchor}
           onClose={handleMenuClose}
         >
-          <MenuItem>Project</MenuItem>
+          <MenuItem onClick={handleGoToProject}>Project</MenuItem>
           <MenuItem onClick={deleteProject} disabled={!isUserAdmin}>
             Delete project
           </MenuItem>

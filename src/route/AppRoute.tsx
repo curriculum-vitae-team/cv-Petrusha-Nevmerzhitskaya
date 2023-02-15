@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import { LinearProgress } from '@mui/material';
 import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
 import { RoutesPath } from '../constants/routes';
@@ -25,6 +25,7 @@ const EmployeeLanguagesPage = lazy(() =>
 );
 const EmployeeProfilePage = lazy(() => import('../pages/EmployeeProfilePage'));
 const EmployeeSkillsPage = lazy(() => import('../pages/EmployeeSkillsPage'));
+const ProjectsDetailsPage = lazy(() => import('../pages/ProjectDetailsPage'));
 
 export default function AppRoute() {
   const isAuth = useReactiveVar(authService.access_token$);
@@ -102,10 +103,13 @@ export default function AppRoute() {
             path={RoutesPath.PROJECTS}
             element={
               <PrivateRoute>
-                <ProjectsPage />
+                <Outlet />
               </PrivateRoute>
             }
-          />
+          >
+            <Route index element={<ProjectsPage />} />
+            <Route path=":id" element={<ProjectsDetailsPage />} />
+          </Route>
           <Route
             path={RoutesPath.SKILLS}
             element={
