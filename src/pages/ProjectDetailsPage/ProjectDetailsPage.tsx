@@ -2,11 +2,11 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import { Button, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
-import Preloader from '../../components/Preloader';
-import { authService } from '../../graphql/auth/authService';
-import { GET_PROJECT } from '../../graphql/project/query';
-import { IProject } from '../../interfaces/IProject';
-import isAdmin from '../../utils/isAdmin';
+import Preloader from '@components/Preloader';
+import { authService } from '@graphql/auth/authService';
+import { GET_PROJECT } from '@graphql/project/query';
+import { IProject } from '@interfaces/IProject';
+import isAdmin from '@utils/isAdmin';
 import { InfoWrapper, PaperWrapper } from './ProjectDetailsPage.styles';
 
 interface IProjectResult {
