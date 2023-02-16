@@ -1,4 +1,4 @@
-import { IUser } from '../interfaces/IUser';
+import { IUser } from '@interfaces/IUser';
 import isAdmin from './isAdmin';
 
 const isAbleToEdit = (loggedUser: IUser | null, user?: IUser) =>

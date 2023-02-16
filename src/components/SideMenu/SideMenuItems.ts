@@ -7,7 +7,7 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { FC } from 'react';
 
-import { RoutesPath } from '../../constants/routes';
+import { RoutesPath } from '@constants/routes';
 
 interface INavigationMenuItem {
   icon: FC;

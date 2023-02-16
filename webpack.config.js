@@ -47,7 +47,18 @@ module.exports = {
   },
   resolve: {
     symlinks: false,
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@components': resolve(__dirname, 'src/components/'),
+      '@constants': resolve(__dirname, 'src/constants/'),
+      '@graphql': resolve(__dirname, 'src/graphql/'),
+      '@hooks': resolve(__dirname, 'src/hooks/'),
+      '@interfaces': resolve(__dirname, 'src/interfaces/'),
+      '@pages': resolve(__dirname, 'src/pages/'),
+      '@route': resolve(__dirname, 'src/route/'),
+      '@themes': resolve(__dirname, 'src/themes/'),
+      '@utils': resolve(__dirname, 'src/utils/')
+    }
   },
   optimization: {
     splitChunks: {

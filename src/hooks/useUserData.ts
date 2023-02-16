@@ -1,9 +1,9 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
 
-import { authService } from '../graphql/auth/authService';
-import { IUserResult } from '../graphql/user/IUserResult';
-import { USER } from '../graphql/user/query';
+import { authService } from '@graphql/auth/authService';
+import { IUserResult } from '@graphql/user/IUserResult';
+import { USER } from '@graphql/user/query';
 
 const useUserData = () => {
   const location = useLocation();

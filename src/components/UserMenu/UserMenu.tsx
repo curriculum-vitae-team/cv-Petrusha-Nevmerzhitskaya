@@ -6,10 +6,10 @@ import { Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { authService } from '../../graphql/auth/authService';
-import { IUserResult } from '../../graphql/user/IUserResult';
-import { USER } from '../../graphql/user/query';
-import theme from '../../themes/theme';
+import { authService } from '@graphql/auth/authService';
+import { IUserResult } from '@graphql/user/IUserResult';
+import { USER } from '@graphql/user/query';
+import theme from '@themes/theme';
 import Preloader from '../Preloader';
 import { IconStyles, StyledAvatar, UserMenuWrap } from './UserMenu.styles';
 

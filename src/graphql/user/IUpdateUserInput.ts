@@ -1,5 +1,5 @@
-import { ILanguageProficiency } from '../../interfaces/ILanguageProficiency';
-import { ISkillMastery } from '../../interfaces/ISkillMastery';
+import { ILanguageProficiency } from '@interfaces/ILanguageProficiency';
+import { ISkillMastery } from '@interfaces/ISkillMastery';
 
 export interface IUpdateUserInput {
   profile: {
