@@ -3,29 +3,29 @@ import { LinearProgress } from '@mui/material';
 import { lazy, Suspense } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
-import { Layout } from '../components/Layout';
-import { RoutesPath } from '../constants/routes';
-import { authService } from '../graphql/auth/authService';
+import { Layout } from '@components/Layout';
+import { RoutesPath } from '@constants/routes';
+import { authService } from '@graphql/auth/authService';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
-const LoginPage = lazy(() => import('../pages/LoginPage'));
-const SignupPage = lazy(() => import('../pages/SignupPage'));
+const LoginPage = lazy(() => import('@pages/LoginPage'));
+const SignupPage = lazy(() => import('@pages/SignupPage'));
 
-const EmployeesPage = lazy(() => import('../pages/EmployeesPage'));
-const DepartmentsPage = lazy(() => import('../pages/DepartmentsPage'));
-const LanguagesPage = lazy(() => import('../pages/LanguagesPage'));
-const CvsPage = lazy(() => import('../pages/CvsPage'));
-const PositionsPage = lazy(() => import('../pages/PositionsPage'));
-const ProjectsPage = lazy(() => import('../pages/ProjectsPage'));
-const SkillsPage = lazy(() => import('../pages/SkillsPage'));
-const EmployeeCvsPage = lazy(() => import('../pages/EmployeeCvsPage'));
+const EmployeesPage = lazy(() => import('@pages/EmployeesPage'));
+const DepartmentsPage = lazy(() => import('@pages/DepartmentsPage'));
+const LanguagesPage = lazy(() => import('@pages/LanguagesPage'));
+const CvsPage = lazy(() => import('@pages/CvsPage'));
+const PositionsPage = lazy(() => import('@pages/PositionsPage'));
+const ProjectsPage = lazy(() => import('@pages/ProjectsPage'));
+const SkillsPage = lazy(() => import('@pages/SkillsPage'));
+const EmployeeCvsPage = lazy(() => import('@pages/EmployeeCvsPage'));
 const EmployeeLanguagesPage = lazy(() =>
-  import('../pages/EmployeeLanguagesPage')
+  import('@pages/EmployeeLanguagesPage')
 );
-const EmployeeProfilePage = lazy(() => import('../pages/EmployeeProfilePage'));
-const EmployeeSkillsPage = lazy(() => import('../pages/EmployeeSkillsPage'));
-const ProjectsDetailsPage = lazy(() => import('../pages/ProjectDetailsPage'));
+const EmployeeProfilePage = lazy(() => import('@pages/EmployeeProfilePage'));
+const EmployeeSkillsPage = lazy(() => import('@pages/EmployeeSkillsPage'));
+const ProjectsDetailsPage = lazy(() => import('@pages/ProjectDetailsPage'));
 
 export default function AppRoute() {
   const isAuth = useReactiveVar(authService.access_token$);

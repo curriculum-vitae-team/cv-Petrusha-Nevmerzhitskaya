@@ -16,9 +16,9 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { RoutesPath } from '../../constants/routes';
-import { DELETE_PROJECT } from '../../graphql/projects/mutation';
-import { PROJECTS } from '../../graphql/projects/query';
+import { RoutesPath } from '@constants/routes';
+import { DELETE_PROJECT } from '@graphql/projects/mutation';
+import { PROJECTS } from '@graphql/projects/query';
 import Preloader from '../Preloader';
 import {
   StyledTableBody,
@@ -28,7 +28,7 @@ import { filterUsers, sortUsers } from './projectModifications';
 import { LabelsType, SortingType } from './types';
 
 interface AnchorType {
-  anchor: SVGSVGElement | null;
+  anchor: HTMLButtonElement | null;
   Id: string;
 }
 
@@ -76,7 +76,7 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
   };
 
   const handleMenuOpen = (
-    event: React.MouseEvent<SVGSVGElement>,
+    event: React.MouseEvent<HTMLButtonElement>,
     Id: string
   ) => {
     setAnchorEl({ anchor: event.currentTarget, Id });
@@ -145,12 +145,10 @@ const ProjectsTable: React.FC<Props> = ({ search, isUserAdmin }) => {
                       <TableCell>{project.end_date || 'Till now'}</TableCell>
                       <TableCell>{project.team_size}</TableCell>
                       <TableCell>
-                        <IconButton>
-                          <MoreVertIcon
-                            onClick={(event) =>
-                              handleMenuOpen(event, project.id)
-                            }
-                          />
+                        <IconButton
+                          onClick={(event) => handleMenuOpen(event, project.id)}
+                        >
+                          <MoreVertIcon />
                         </IconButton>
                       </TableCell>
                     </TableRow>
