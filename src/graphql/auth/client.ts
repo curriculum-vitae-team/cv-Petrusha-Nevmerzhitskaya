@@ -2,7 +2,7 @@ import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
-import { notificationService } from '../../components/Notification/NotificationSerivice';
+import { notificationService } from '@components/Notification/NotificationSerivice';
 import { authService } from './authService';
 
 const httpLink = new HttpLink({

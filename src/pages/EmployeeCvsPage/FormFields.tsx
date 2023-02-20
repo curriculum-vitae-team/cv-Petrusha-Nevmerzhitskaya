@@ -1,12 +1,12 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Control, Controller, ControllerRenderProps } from 'react-hook-form';
 
-import CustomSelect from '../../components/CustomSelect';
-import CustomTextField from '../../components/CustomTextField';
-import { IProjectsResult } from '../../graphql/projects/IProjectsResult';
-import { IUsersResult } from '../../graphql/users/IUsersResult';
-import { ICv } from '../../interfaces/ICv';
-import { IUser } from '../../interfaces/IUser';
+import CustomSelect from '@components/CustomSelect';
+import CustomTextField from '@components/CustomTextField';
+import { IProjectsResult } from '@graphql/projects/IProjectsResult';
+import { IUsersResult } from '@graphql/users/IUsersResult';
+import { ICv } from '@interfaces/ICv';
+import { IUser } from '@interfaces/IUser';
 import { IFormInput } from './IFormInput';
 
 interface Props {

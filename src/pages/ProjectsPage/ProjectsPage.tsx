@@ -3,10 +3,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment } from '@mui/material';
 import { useState } from 'react';
 
-import CustomTextField from '../../components/CustomTextField';
-import ProjectsTable from '../../components/ProjectsTable';
-import { authService } from '../../graphql/auth/authService';
-import isAdmin from '../../utils/isAdmin';
+import CustomTextField from '@components/CustomTextField';
+import ProjectsTable from '@components/ProjectsTable';
+import { authService } from '@graphql/auth/authService';
+import isAdmin from '@utils/isAdmin';
 import {
   StyledBox,
   StyledButton,

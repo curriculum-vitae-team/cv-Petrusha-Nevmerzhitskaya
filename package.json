@@ -20,7 +20,6 @@
     "@mui/material": "^5.11.6",
     "@types/uuid": "^9.0.0",
     "css-loader": "^6.7.3",
-    "eslint-plugin-simple-import-sort": "^9.0.0",
     "graphql": "^16.6.0",
     "husky": "^8.0.3",
     "react": "^18.2.0",

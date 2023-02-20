@@ -2,12 +2,12 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
 
-import { DEPARTMENTS } from '../../graphql/departments/query';
-import { POSITIONS } from '../../graphql/positions/query';
-import { IFormInput } from '../../graphql/user/IFormInput';
-import { IDepartment } from '../../interfaces/IDepartment';
-import { IPosition } from '../../interfaces/IPosition';
-import { IUser } from '../../interfaces/IUser';
+import { DEPARTMENTS } from '@graphql/departments/query';
+import { POSITIONS } from '@graphql/positions/query';
+import { IFormInput } from '@graphql/user/IFormInput';
+import { IDepartment } from '@interfaces/IDepartment';
+import { IPosition } from '@interfaces/IPosition';
+import { IUser } from '@interfaces/IUser';
 import CustomSelect from '../CustomSelect';
 import CustomTextField from '../CustomTextField';
 import Preloader from '../Preloader';

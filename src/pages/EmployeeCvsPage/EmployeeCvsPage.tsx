@@ -15,19 +15,19 @@ import {
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import DoubleTextField from '../../components/DoubleTextField';
-import FormModal from '../../components/FormModal';
-import Preloader from '../../components/Preloader';
-import ProfileLayout from '../../components/ProfileLayout';
-import { UNBIND_CV, UPDATE_CV } from '../../graphql/cv/mutation';
-import { IProjectsResult } from '../../graphql/projects/IProjectsResult';
-import { PROJECTS } from '../../graphql/projects/query';
-import { USER } from '../../graphql/user/query';
-import { IUsersResult } from '../../graphql/users/IUsersResult';
-import { USERS } from '../../graphql/users/query';
-import useUserData from '../../hooks/useUserData';
-import { ICv } from '../../interfaces/ICv';
-import isAbleToEdit from '../../utils/isAbleToEdit';
+import DoubleTextField from '@components/DoubleTextField';
+import FormModal from '@components/FormModal';
+import Preloader from '@components/Preloader';
+import ProfileLayout from '@components/ProfileLayout';
+import { UNBIND_CV, UPDATE_CV } from '@graphql/cv/mutation';
+import { IProjectsResult } from '@graphql/projects/IProjectsResult';
+import { PROJECTS } from '@graphql/projects/query';
+import { USER } from '@graphql/user/query';
+import { IUsersResult } from '@graphql/users/IUsersResult';
+import { USERS } from '@graphql/users/query';
+import useUserData from '@hooks/useUserData';
+import { ICv } from '@interfaces/ICv';
+import isAbleToEdit from '@utils/isAbleToEdit';
 import FormFields from './FormFields';
 import { IFormInput } from './IFormInput';
 

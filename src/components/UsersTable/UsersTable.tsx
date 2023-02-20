@@ -17,8 +17,8 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { DELETE_USER } from '../../graphql/user/mutation';
-import { USERS } from '../../graphql/users/query';
+import { DELETE_USER } from '@graphql/user/mutation';
+import { USERS } from '@graphql/users/query';
 import Preloader from '../Preloader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
