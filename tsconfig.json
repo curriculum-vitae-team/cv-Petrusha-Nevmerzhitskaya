@@ -30,7 +30,7 @@
       "@route/*": ["route/*"],
       "@themes/*": ["themes/*"],
       "@utils/*": ["utils/*"]
-    },
+    }
   },
   "include": ["src"],
   "exclude": ["public", "node_modules"]
