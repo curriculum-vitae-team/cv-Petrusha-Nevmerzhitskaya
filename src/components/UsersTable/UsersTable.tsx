@@ -46,6 +46,7 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
   const navigate = useNavigate();
 
   const { loading, error, data } = useQuery(USERS);
+
   const [deleteUserMutation] = useMutation<{ affected: number }>(DELETE_USER);
 
   const [sorting, setSorting] = useState<SortingType>({
