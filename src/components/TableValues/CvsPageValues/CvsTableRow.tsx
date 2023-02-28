@@ -8,6 +8,7 @@ import { authService } from '@graphql/auth/authService';
 import { DELETE_CV } from '@graphql/cvs/mutation';
 import { ICv } from '@interfaces/ICv';
 import isAdmin from '@utils/isAdmin';
+import { DescriptionStyles } from './CvsTableRow.styles';
 
 export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
   const user = useReactiveVar(authService.user$);
@@ -34,16 +35,7 @@ export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
         <Checkbox checked={item.is_template} readOnly />
       </TableCell>
       <TableCell>{item.name}</TableCell>
-      <TableCell
-        sx={{
-          overflow: 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
-          maxWidth: 300
-        }}
-      >
-        {item.description}
-      </TableCell>
+      <TableCell sx={DescriptionStyles}>{item.description}</TableCell>
       <TableCell>{item.user?.email || '-'}</TableCell>
       <TableCell>{projectNames}</TableCell>
       <TableCell>

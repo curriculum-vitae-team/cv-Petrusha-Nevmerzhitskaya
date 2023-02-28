@@ -1,4 +1,4 @@
-import { TableHead, TableBody, TableRow } from '@mui/material';
+import { TableHead, TableRow } from '@mui/material';
 import { FC, useState } from 'react';
 import { sortItems, searchItems } from './modifications';
 import * as Styled from './Table.styles';
@@ -42,11 +42,11 @@ const Table = <T extends Item>({
           <TableHeadComponent />
         </TableSortContext.Provider>
       </TableHead>
-      <TableBody>
+      <Styled.TableBodyStyled>
         {sortedItems.map((item) => (
           <TableRowComponent key={item.id} item={item} />
         ))}
-      </TableBody>
+      </Styled.TableBodyStyled>
     </Styled.MuiTable>
   );
 };

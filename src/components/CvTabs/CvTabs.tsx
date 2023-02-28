@@ -1,5 +1,6 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
+import { TabStyles } from './CvTabs.styles';
 
 interface ITabs {
   label: string;
@@ -39,7 +40,7 @@ const CvTabs: React.FC = () => {
             component={NavLink}
             value={path}
             to={path}
-            sx={{ fontWeight: 'bold', paddingX: 6 }}
+            sx={TabStyles}
           />
         ))}
       </Tabs>
