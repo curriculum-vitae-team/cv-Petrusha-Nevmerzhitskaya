@@ -1,14 +1,9 @@
 import { TableHead, TableRow } from '@mui/material';
 import { FC, useState } from 'react';
 import { sortItems, searchItems } from './modifications';
+import { TableSearchContext, TableSortContext } from './Table.context';
 import * as Styled from './Table.styles';
-import {
-  Item,
-  TableProps,
-  TableSearchContext,
-  TableSortContext,
-  SortOrder
-} from './Table.types';
+import { Item, TableProps, SortOrder } from './Table.types';
 
 const Table = <T extends Item>({
   items,

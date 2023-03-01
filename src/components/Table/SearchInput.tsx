@@ -5,7 +5,7 @@ import {
   OutlinedInputProps
 } from '@mui/material';
 import { ChangeEvent, useContext } from 'react';
-import { TableSearchContext } from './Table.types';
+import { TableSearchContext } from './Table.context';
 
 const SearchInput = (props: OutlinedInputProps) => {
   const { search, setSearch } = useContext(TableSearchContext);

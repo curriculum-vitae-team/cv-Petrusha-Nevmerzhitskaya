@@ -1,4 +1,4 @@
-import { FC, createContext, Dispatch, SetStateAction } from 'react';
+import { FC } from 'react';
 
 export enum SortOrder {
   Asc = 'asc',
@@ -21,23 +21,3 @@ export type TableProps<T> = {
   searchBy: (keyof T)[];
   defaultSortBy: keyof T;
 };
-
-export const TableSearchContext = createContext<{
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
-}>({
-  search: '',
-  setSearch: () => {}
-});
-
-export const TableSortContext = createContext<{
-  sortBy: string;
-  order: SortOrder;
-  setSortBy: Dispatch<SetStateAction<string>>;
-  setOrder: Dispatch<SetStateAction<SortOrder>>;
-}>({
-  sortBy: '',
-  order: SortOrder.Asc,
-  setSortBy: () => {},
-  setOrder: () => {}
-});

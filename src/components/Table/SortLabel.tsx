@@ -1,6 +1,7 @@
 import { TableSortLabel } from '@mui/material';
 import { useContext } from 'react';
-import { TableSortContext, SortOrder } from './Table.types';
+import { TableSortContext } from './Table.context';
+import { SortOrder } from './Table.types';
 
 export type SortLabelProps<T> = {
   column: T;
