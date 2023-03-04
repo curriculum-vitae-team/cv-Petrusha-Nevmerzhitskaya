@@ -1,36 +1,38 @@
-import { Breadcrumbs, Link, Typography } from '@mui/material';
+import { HomeOutlined, NavigateNext } from '@mui/icons-material';
+import { Link, Typography } from '@mui/material';
+import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-
-import { BreadcrumbsWrap } from './Breadcrumbs.style';
-
-function toTitleCase(str: string) {
-  return str
-    .split(' ')
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(' ');
-}
+import { BreadcrumbsContext } from './Breadcrumbs.context';
+import * as Styled from './Breadcrumbs.style';
 
 export const HeaderBreadcrumbs = () => {
   const location = useLocation();
-  const pathnames = location.pathname.split('/').filter((x) => x);
+  const { config } = useContext(BreadcrumbsContext);
+
+  const links = location.pathname
+    .split('/')
+    .filter((x) => x)
+    .map((name, index, array) => ({
+      name: name[0].toUpperCase() + name.slice(1),
+      to: array.slice(0, index + 1).join('/')
+    }));
 
   return (
-    <BreadcrumbsWrap>
-      <Breadcrumbs aria-label="Breadcrumb">
-        <Link href="/">Home</Link>
-        {pathnames.map((value, index) => {
-          const last = index === pathnames.length - 1;
-          const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-
-          return last ? (
-            <Typography key={to}>{toTitleCase(value)}</Typography>
-          ) : (
-            <Link href={to} key={to}>
-              {toTitleCase(value)}
-            </Link>
-          );
-        })}
-      </Breadcrumbs>
-    </BreadcrumbsWrap>
+    <Styled.Breadcrumbs
+      separator={<NavigateNext fontSize="small" color="disabled" />}
+    >
+      <Link href="/" sx={Styled.HomeStyles}>
+        <HomeOutlined />
+        <Typography>Home</Typography>
+      </Link>
+      {links.map(({ name, to }) => {
+        const dataFromConfig = config[to];
+        return (
+          <Link key={name} href={`/${dataFromConfig?.to || to}`}>
+            <Typography>{dataFromConfig?.text || name}</Typography>
+          </Link>
+        );
+      })}
+    </Styled.Breadcrumbs>
   );
 };

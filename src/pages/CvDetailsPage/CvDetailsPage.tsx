@@ -5,6 +5,7 @@ import CvTabs from '@components/CvTabs';
 import Preloader from '@components/Preloader';
 import { authService } from '@graphql/auth/authService';
 import { CV } from '@graphql/cvs/query';
+import { useBreadcrumbs } from '@hooks/useBreadcrumbs';
 import { ICv } from '@interfaces/ICv';
 import isAdmin from '@utils/isAdmin';
 import { InfoWrapper, PaperWrapper } from './CvDetailsPage.styles';
@@ -17,6 +18,13 @@ const CvDetailsPage = () => {
   const { id } = useParams();
   const { data, loading, error } = useQuery<ICvResult>(CV, {
     variables: { id }
+  });
+
+  useBreadcrumbs({
+    [`cvs/${id}`]: {
+      text: data?.cv.name,
+      to: `cvs/${id}`
+    }
   });
 
   const user = useReactiveVar(authService.user$);
