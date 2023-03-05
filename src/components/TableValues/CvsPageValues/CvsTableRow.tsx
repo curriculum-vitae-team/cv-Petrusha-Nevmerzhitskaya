@@ -8,12 +8,12 @@ import { authService } from '@graphql/auth/authService';
 import { DELETE_CV } from '@graphql/cvs/mutation';
 import { CVS } from '@graphql/cvs/query';
 import { ICv } from '@interfaces/ICv';
-import isAdmin from '@utils/isAdmin';
+import isAbleToEdit from '@utils/isAbleToEdit';
 import { DescriptionStyles } from './CvsTableRow.styles';
 
 export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
   const user = useReactiveVar(authService.user$);
-  const isUserAdmin = isAdmin(user);
+  const AbleToEdit = isAbleToEdit(user);
   const [deleteCV] = useMutation<{ affected: number }>(DELETE_CV, {
     refetchQueries: [{ query: CVS }]
   });
@@ -44,7 +44,7 @@ export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
       <TableCell>
         <ActionsMenu>
           <MenuItem onClick={handleClick}>CV</MenuItem>
-          <MenuItem disabled={!isUserAdmin} onClick={handleDeleteCV}>
+          <MenuItem disabled={!AbleToEdit} onClick={handleDeleteCV}>
             Delete CV
           </MenuItem>
         </ActionsMenu>

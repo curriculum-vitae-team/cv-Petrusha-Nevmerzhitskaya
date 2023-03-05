@@ -12,3 +12,8 @@ export const InfoWrapper = styled('div')(() => ({
   flexDirection: 'column',
   rowGap: 10
 }));
+
+export const ButtonStyles = {
+  height: '40px',
+  width: '100px'
+};

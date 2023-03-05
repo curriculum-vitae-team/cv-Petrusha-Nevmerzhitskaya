@@ -1,20 +1,24 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CvTabs from '@components/CvTabs';
 import Preloader from '@components/Preloader';
+import UpdateCvForm from '@components/TableValues/CvsPageValues/UpdateCvForm';
 import { authService } from '@graphql/auth/authService';
 import { CV } from '@graphql/cvs/query';
 import { useBreadcrumbs } from '@hooks/useBreadcrumbs';
 import { ICv } from '@interfaces/ICv';
-import isAdmin from '@utils/isAdmin';
-import { InfoWrapper, PaperWrapper } from './CvDetailsPage.styles';
+import isAbleToEdit from '@utils/isAbleToEdit';
+import * as Styled from './CvDetailsPage.styles';
 
 interface ICvResult {
   cv: ICv;
 }
 
 const CvDetailsPage = () => {
+  const user = useReactiveVar(authService.user$);
+  const AbleToEdit = isAbleToEdit(user);
   const { id } = useParams();
   const { data, loading, error } = useQuery<ICvResult>(CV, {
     variables: { id }
@@ -27,15 +31,29 @@ const CvDetailsPage = () => {
     }
   });
 
-  const user = useReactiveVar(authService.user$);
+  const [formOpened, setFormOpened] = useState(false);
+  const UpdateCvClick = () => {
+    setFormOpened(true);
+  };
 
-  const isUserAdmin = isAdmin(user);
+  const closeForm = () => {
+    setFormOpened(false);
+  };
+
+  const createUser = async () => {
+    closeForm();
+  };
 
   return (
     <Preloader loading={loading} error={error}>
+      <UpdateCvForm
+        opened={formOpened}
+        close={closeForm}
+        confirm={createUser}
+      />
       <CvTabs />
-      <PaperWrapper elevation={7}>
-        <InfoWrapper>
+      <Styled.PaperWrapper elevation={7}>
+        <Styled.InfoWrapper>
           <Typography>Name: {data?.cv?.name}</Typography>
           <Typography>Description: {data?.cv?.description}</Typography>
           <Typography>
@@ -56,9 +74,17 @@ const CvDetailsPage = () => {
               .map((language) => language.language_name)
               .join(', ') || '-'}
           </Typography>
-        </InfoWrapper>
-        <Button disabled={!isUserAdmin}>Edit</Button>
-      </PaperWrapper>
+        </Styled.InfoWrapper>
+        <Button
+          sx={Styled.ButtonStyles}
+          color="secondary"
+          variant="contained"
+          disabled={!AbleToEdit}
+          onClick={UpdateCvClick}
+        >
+          Edit
+        </Button>
+      </Styled.PaperWrapper>
     </Preloader>
   );
 };
