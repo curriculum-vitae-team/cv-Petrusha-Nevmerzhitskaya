@@ -13,7 +13,8 @@ import { DescriptionStyles } from './CvsTableRow.styles';
 
 export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
   const user = useReactiveVar(authService.user$);
-  const AbleToEdit = isAbleToEdit(user);
+  const AbleToEdit = isAbleToEdit(user) || user?.id === item.user?.id;
+
   const [deleteCV] = useMutation<{ affected: number }>(DELETE_CV, {
     refetchQueries: [{ query: CVS }]
   });
@@ -27,7 +28,6 @@ export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
 
   const handleClick = () => {
     navigate(`${RoutesPath.CVS}/${item.id}/details`);
-    console.log(item.id);
   };
 
   const projectNames =

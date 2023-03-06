@@ -9,7 +9,7 @@ import { authService } from '@graphql/auth/authService';
 import { CV } from '@graphql/cvs/query';
 import { useBreadcrumbs } from '@hooks/useBreadcrumbs';
 import { ICv } from '@interfaces/ICv';
-import isAbleToEdit from '@utils/isAbleToEdit';
+import isAdmin from '@utils/isAdmin';
 import * as Styled from './CvDetailsPage.styles';
 
 interface ICvResult {
@@ -18,7 +18,7 @@ interface ICvResult {
 
 const CvDetailsPage = () => {
   const user = useReactiveVar(authService.user$);
-  const AbleToEdit = isAbleToEdit(user);
+  const AbleToEdit = isAdmin(user);
   const { id } = useParams();
   const { data, loading, error } = useQuery<ICvResult>(CV, {
     variables: { id }
