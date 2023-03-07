@@ -12,9 +12,12 @@ import { PROJECTS } from '@graphql/projects/query';
 import { USER } from '@graphql/user/query';
 import { ICv } from '@interfaces/ICv';
 import { IUser } from '@interfaces/IUser';
+import {
+  StyledBox,
+  StyledDialogTitle
+} from '../../CvsPageValues/CreateCvForm/CreateCvForm.styles';
 import FormFields from './FormFields';
 import { IFormInput } from './IFormInput';
-import { StyledBox, StyledDialogTitle } from './UpdateProjectsCvForm.styles';
 
 interface Props {
   opened: boolean;
