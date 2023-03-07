@@ -13,8 +13,8 @@ import {
   StyledBox,
   StyledDialogTitle
 } from '../CreateCvForm/CreateCvForm.styles';
+import FormFields from '../CreateCvForm/FormFields';
 import { IFormInput } from '../CreateCvForm/IFormInput';
-import FormFields from './FormFields';
 
 interface Props {
   opened: boolean;
