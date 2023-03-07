@@ -4,13 +4,13 @@ import { useState } from 'react';
 import ActionsMenu from '@components/Table/ActionsMenu';
 import { TableRowProps } from '@components/Table/Table.types';
 import { authService } from '@graphql/auth/authService';
-import { DELETE_POSITION } from '@graphql/positions/mutation';
-import { POSITIONS } from '@graphql/positions/query';
+import { DELETE_SKILL } from '@graphql/skills/mutation';
+import { SKILLS } from '@graphql/skills/query';
 import { IDepartment } from '@interfaces/IDepartment';
 import isAbleToEdit from '@utils/isAbleToEdit';
-import UpdateDepartmentForm from './UpdatePositionForm';
+import UpdateDepartmentForm from './UpdateSkillForm';
 
-export const PositionsTableRow = ({ item }: TableRowProps<IDepartment>) => {
+export const SkillsTableRow = ({ item }: TableRowProps<IDepartment>) => {
   const user = useReactiveVar(authService.user$);
   const AbleToEdit = isAbleToEdit(user);
   const [formOpened, setFormOpened] = useState(false);
@@ -26,12 +26,12 @@ export const PositionsTableRow = ({ item }: TableRowProps<IDepartment>) => {
     closeForm();
   };
 
-  const [deletePosition] = useMutation<{ affected: number }>(DELETE_POSITION, {
-    refetchQueries: [{ query: POSITIONS }]
+  const [deleteSkill] = useMutation<{ affected: number }>(DELETE_SKILL, {
+    refetchQueries: [{ query: SKILLS }]
   });
 
   const handleDelete = async () => {
-    await deletePosition({
+    await deleteSkill({
       variables: { id: item.id }
     });
   };

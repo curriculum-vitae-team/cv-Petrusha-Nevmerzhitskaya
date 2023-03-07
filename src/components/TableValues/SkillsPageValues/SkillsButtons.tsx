@@ -1,9 +1,9 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import SearchInput from '@components/Table/SearchInput';
-import CreateDepartmentForm from './CreatePositionForm';
+import CreateSkillForm from './CreateSkillForm';
 
-export const PositionsTableButtons = () => {
+export const SkillsTableButtons = () => {
   const [formOpened, setFormOpened] = useState(false);
   const CreateClick = () => {
     setFormOpened(true);
@@ -18,14 +18,10 @@ export const PositionsTableButtons = () => {
   };
   return (
     <>
-      <CreateDepartmentForm
-        opened={formOpened}
-        close={closeForm}
-        confirm={create}
-      />
+      <CreateSkillForm opened={formOpened} close={closeForm} confirm={create} />
       <SearchInput />
       <Button color="secondary" variant="contained" onClick={CreateClick}>
-        Create Position
+        Create Skill
       </Button>
     </>
   );
