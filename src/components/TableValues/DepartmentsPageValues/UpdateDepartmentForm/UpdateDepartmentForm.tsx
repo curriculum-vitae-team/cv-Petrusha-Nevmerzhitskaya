@@ -9,7 +9,7 @@ import {
   StyledDialogTitle
 } from '../../CvsPageValues/CreateCvForm/CreateCvForm.styles';
 import { IFormInput } from '../../CvsPageValues/CreateCvForm/IFormInput';
-import FormFields from './FormFields';
+import FormFields from '../CreateDepartmentForm/FormFields';
 
 interface Props {
   opened: boolean;
