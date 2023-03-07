@@ -4,13 +4,13 @@ import { useState } from 'react';
 import ActionsMenu from '@components/Table/ActionsMenu';
 import { TableRowProps } from '@components/Table/Table.types';
 import { authService } from '@graphql/auth/authService';
-import { DELETE_POSITION } from '@graphql/positions/mutation';
-import { POSITIONS } from '@graphql/positions/query';
-import { IPosition } from '@interfaces/IPosition';
+import { DELETE_LANGUAGE } from '@graphql/languages/mutation';
+import { LANGUAGES } from '@graphql/languages/query';
+import { ILanguage } from '@interfaces/ILanguage';
 import isAbleToEdit from '@utils/isAbleToEdit';
-import UpdateDepartmentForm from './UpdatePositionForm';
+import UpdateLanguageForm from './UpdateLanguageForm';
 
-export const PositionsTableRow = ({ item }: TableRowProps<IPosition>) => {
+export const LanguagesTableRow = ({ item }: TableRowProps<ILanguage>) => {
   const user = useReactiveVar(authService.user$);
   const AbleToEdit = isAbleToEdit(user);
   const [formOpened, setFormOpened] = useState(false);
@@ -26,19 +26,19 @@ export const PositionsTableRow = ({ item }: TableRowProps<IPosition>) => {
     closeForm();
   };
 
-  const [deletePosition] = useMutation<{ affected: number }>(DELETE_POSITION, {
-    refetchQueries: [{ query: POSITIONS }]
+  const [deleteLanguage] = useMutation<{ affected: number }>(DELETE_LANGUAGE, {
+    refetchQueries: [{ query: LANGUAGES }]
   });
 
   const handleDelete = async () => {
-    await deletePosition({
+    await deleteLanguage({
       variables: { id: item.id }
     });
   };
 
   return (
     <>
-      <UpdateDepartmentForm
+      <UpdateLanguageForm
         opened={formOpened}
         close={closeForm}
         confirm={create}
@@ -46,6 +46,7 @@ export const PositionsTableRow = ({ item }: TableRowProps<IPosition>) => {
       />
       <TableRow>
         <TableCell>{item.name}</TableCell>
+        <TableCell>{item.iso2}</TableCell>
         <TableCell sx={{ textAlign: 'right' }}>
           <ActionsMenu>
             <MenuItem disabled={!AbleToEdit} onClick={UpdateClick}>
