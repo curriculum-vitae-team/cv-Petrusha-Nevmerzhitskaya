@@ -1,3 +1,3 @@
-import UpdateLanguageForm from './UpdateSkillForm';
+import UpdateLanguageForm from './UpdateLanguageForm';
 
 export default UpdateLanguageForm;
