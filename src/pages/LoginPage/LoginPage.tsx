@@ -6,12 +6,12 @@ import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 
-import { RoutesPath } from '../../constants/routes';
-import { authService } from '../../graphql/auth/authService';
-import { ILoginResult } from '../../graphql/auth/IAuthResult';
-import { IFormInput } from '../../graphql/auth/IFormInput';
-import { LOGIN } from '../../graphql/auth/query';
-import theme from '../../themes/theme';
+import { RoutesPath } from '@constants/routes';
+import { authService } from '@graphql/auth/authService';
+import { ILoginResult } from '@graphql/auth/IAuthResult';
+import { IFormInput } from '@graphql/auth/IFormInput';
+import { LOGIN } from '@graphql/auth/query';
+import theme from '@themes/theme';
 import {
   FormAuth,
   PaperAuth,

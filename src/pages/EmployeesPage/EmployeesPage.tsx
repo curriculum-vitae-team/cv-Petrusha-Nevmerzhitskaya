@@ -1,19 +1,19 @@
 import { useReactiveVar } from '@apollo/client';
 import SearchIcon from '@mui/icons-material/Search';
-import { FormControl, InputAdornment, InputLabel } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 import { useState } from 'react';
-
-import CreateUserForm from '../../components/CreateUserForm';
-import Preloader from '../../components/Preloader';
-import UsersTable from '../../components/UsersTable';
-import { authService } from '../../graphql/auth/authService';
-import isAdmin from '../../utils/isAdmin';
+import CreateUserForm from '@components/CreateUserForm';
+import Preloader from '@components/Preloader';
 import {
   StyledBox,
   StyledButton,
   StyledOutlinedInput,
   StyledPageBox
 } from './EmployeesPage.styles';
+import CustomTextField from '@components/CustomTextField';
+import UsersTable from '@components/UsersTable';
+import { authService } from '@graphql/auth/authService';
+import isAdmin from '@utils/isAdmin';
 
 const EmployeesPage: React.FC = () => {
   const user = useReactiveVar(authService.user$);

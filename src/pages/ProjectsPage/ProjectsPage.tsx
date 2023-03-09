@@ -1,15 +1,15 @@
 import { useReactiveVar } from '@apollo/client';
 import SearchIcon from '@mui/icons-material/Search';
-import { FormControl, InputAdornment, InputLabel } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 import { useState } from 'react';
 
-import ProjectsTable from '../../components/ProjectsTable';
-import { authService } from '../../graphql/auth/authService';
-import isAdmin from '../../utils/isAdmin';
+import CustomTextField from '@components/CustomTextField';
+import ProjectsTable from '@components/ProjectsTable';
+import { authService } from '@graphql/auth/authService';
+import isAdmin from '@utils/isAdmin';
 import {
   StyledBox,
   StyledButton,
-  StyledOutlinedInput,
   StyledPageBox
 } from '../EmployeesPage/EmployeesPage.styles';
 
@@ -27,21 +27,19 @@ const ProjectsPage: React.FC = () => {
   return (
     <StyledPageBox marginX={3}>
       <StyledBox marginX={2} marginY={3}>
-        <FormControl>
-          <InputLabel htmlFor="search-input">Search</InputLabel>
-          <StyledOutlinedInput
-            id="search-input"
-            size="small"
-            label="Search"
-            startAdornment={
+        <CustomTextField
+          label="Search"
+          props={{
+            startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
-            }
-            onChange={searchHandler}
-            value={search}
-          />
-        </FormControl>
+            ),
+            size: 'small',
+            onChange: searchHandler,
+            value: search
+          }}
+        />
         <StyledButton
           variant="outlined"
           color="secondary"

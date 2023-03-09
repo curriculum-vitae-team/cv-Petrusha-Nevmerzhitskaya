@@ -2,8 +2,8 @@ import { useReactiveVar } from '@apollo/client';
 import React, { FC } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { RoutesPath } from '../constants/routes';
-import { authService } from '../graphql/auth/authService';
+import { RoutesPath } from '@constants/routes';
+import { authService } from '@graphql/auth/authService';
 
 interface IPublicRouteProps {
   children: React.ReactNode | JSX.Element;

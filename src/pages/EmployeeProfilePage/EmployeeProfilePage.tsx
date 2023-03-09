@@ -1,18 +1,18 @@
 import { useMutation } from '@apollo/client';
 
-import Preloader from '../../components/Preloader';
-import ProfileLayout from '../../components/ProfileLayout';
-import UserProfileForm from '../../components/UserProfileForm';
-import UserProfileHeader from '../../components/UserProfileHeader';
-import { IFormInput } from '../../graphql/user/IFormInput';
+import Preloader from '@components/Preloader';
+import ProfileLayout from '@components/ProfileLayout';
+import UserProfileForm from '@components/UserProfileForm';
+import UserProfileHeader from '@components/UserProfileHeader';
+import { IFormInput } from '@graphql/user/IFormInput';
 import {
   DELETE_AVATAR,
   UPDATE_USER,
   UPLOAD_AVATAR
-} from '../../graphql/user/mutation';
-import { USER } from '../../graphql/user/query';
-import useUserData from '../../hooks/useUserData';
-import isAbleToEdit from '../../utils/isAbleToEdit';
+} from '@graphql/user/mutation';
+import { USER } from '@graphql/user/query';
+import useUserData from '@hooks/useUserData';
+import isAbleToEdit from '@utils/isAbleToEdit';
 
 const convertBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
