@@ -10,7 +10,6 @@ export const CVS = gql`
       user {
         id
         email
-
       }
       projects {
         id

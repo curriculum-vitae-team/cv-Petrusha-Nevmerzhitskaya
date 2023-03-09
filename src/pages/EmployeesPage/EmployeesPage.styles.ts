@@ -1,4 +1,4 @@
-import { Box, Button, styled } from '@mui/material';
+import { Box, Button, OutlinedInput, styled } from '@mui/material';
 
 export const StyledPageBox = styled(Box)({
   doverflow: 'auto'
@@ -11,5 +11,9 @@ export const StyledBox = styled(Box)({
 });
 
 export const StyledButton = styled(Button)({
+  borderRadius: 0
+});
+
+export const StyledOutlinedInput = styled(OutlinedInput)({
   borderRadius: 0
 });

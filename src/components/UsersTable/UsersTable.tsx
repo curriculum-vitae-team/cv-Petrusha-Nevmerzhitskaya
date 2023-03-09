@@ -17,12 +17,11 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 import { authService } from '@graphql/auth/authService';
-import { IUser } from '@interfaces/IUser';
-import ConfirmDialog from '../ConfirmDialog';
 import { DELETE_USER } from '@graphql/user/mutation';
 import { USERS } from '@graphql/users/query';
+import { IUser } from '@interfaces/IUser';
+import ConfirmDialog from '../ConfirmDialog';
 import Preloader from '../Preloader';
 import { LabelsType, SortingType } from './types';
 import { filterUsers, sortUsers } from './usersModifications';
@@ -55,7 +54,6 @@ const UsersTable: React.FC<Props> = ({ search, isUserAdmin }) => {
   const [deleteUserMutation] = useMutation<{ affected: number }>(DELETE_USER, {
     refetchQueries: [{ query: USERS }]
   });
-
 
   const [sorting, setSorting] = useState<SortingType>({
     name: 'department_name',
