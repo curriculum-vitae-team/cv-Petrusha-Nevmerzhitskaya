@@ -1,12 +1,10 @@
 import { useQuery } from '@apollo/client';
-import { useEffect } from 'react';
 import { Controller, ControllerRenderProps, useForm } from 'react-hook-form';
-
+import { IDepartmentResult } from '@graphql/departments/IDepartmentsResult';
 import { DEPARTMENTS } from '@graphql/departments/query';
+import { IPositionResult } from '@graphql/positions/IpositionResult';
 import { POSITIONS } from '@graphql/positions/query';
 import { IFormInput } from '@graphql/user/IFormInput';
-import { IDepartment } from '@interfaces/IDepartment';
-import { IPosition } from '@interfaces/IPosition';
 import { IUser } from '@interfaces/IUser';
 import CustomSelect from '../CustomSelect';
 import CustomTextField from '../CustomTextField';
@@ -36,25 +34,22 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
     loading: departmentsLoading,
     error: departmentsError,
     data: departmentsData
-  } = useQuery<{ departments: IDepartment[] }>(DEPARTMENTS);
+  } = useQuery<IDepartmentResult>(DEPARTMENTS);
   const {
     loading: positionsLoading,
     error: positionsError,
     data: positionsData
-  } = useQuery<{ positions: IPosition[] }>(POSITIONS);
+  } = useQuery<IPositionResult>(POSITIONS);
 
-  const { control, handleSubmit, setValue } = useForm<IFormInput>();
+  const {
+    control,
+    handleSubmit,
+    formState: { dirtyFields }
+  } = useForm<IFormInput>();
 
   const onSubmit = async (data: IFormInput) => {
     updateUser(data);
   };
-
-  useEffect(() => {
-    setValue('firstName', user?.profile.first_name || '');
-    setValue('lastName', user?.profile.last_name || '');
-    setValue('department', user?.department?.id || '');
-    setValue('position', user?.position?.id || '');
-  }, [user]);
 
   const formFields: FormField[] = [
     {
@@ -121,6 +116,12 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
     }
   ];
 
+  const isDirty =
+    !!dirtyFields.department ||
+    !!dirtyFields.firstName ||
+    !!dirtyFields.lastName ||
+    !!dirtyFields.position;
+
   return (
     <Preloader
       loading={positionsLoading || departmentsLoading}
@@ -134,7 +135,7 @@ const UserProfileForm: React.FC<Props> = ({ user, ableToEdit, updateUser }) => {
           variant="contained"
           color="secondary"
           type="submit"
-          disabled={!ableToEdit}
+          disabled={!ableToEdit || !isDirty}
         >
           Save
         </StyledButton>
