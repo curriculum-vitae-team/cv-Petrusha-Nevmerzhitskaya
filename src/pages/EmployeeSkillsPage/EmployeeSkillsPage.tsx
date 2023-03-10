@@ -1,118 +1,96 @@
 import { useMutation } from '@apollo/client';
-import { Box, Chip, Typography } from '@mui/material';
-import { useForm } from 'react-hook-form';
-
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Chip, IconButton, Typography } from '@mui/material';
+import { useState } from 'react';
+import EmployeeTabs from '@components/EmployeeTabs';
 import Preloader from '@components/Preloader';
-import ProfileLayout from '@components/ProfileLayout';
 import { UPDATE_USER } from '@graphql/user/mutation';
 import { USER } from '@graphql/user/query';
 import useUserData from '@hooks/useUserData';
 import isAbleToEdit from '@utils/isAbleToEdit';
-import {
-  StyledBox,
-  StyledButton,
-  StyledForm,
-  StyledFormControl,
-  StyledInputLabel,
-  StyledOutlinedInput
-} from './EmployeeSkillsPage.styles';
-
-interface IFormInput {
-  skillName: string;
-  mastery: string;
-}
+import AddLanguageForm from './AddSkillForm';
+import { createArrayForSkills } from './AddSkillForm/AddSkillForm';
+import { IFormInput } from './AddSkillForm/IFormInput';
+import * as Styled from './EmployeeSkillsPage.styles';
 
 const EmployeeSkillsPage: React.FC = () => {
   const { user, loggedUser, loading, error } = useUserData();
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset
-  } = useForm<IFormInput>({
-    defaultValues: {
-      skillName: '',
-      mastery: ''
-    }
+  const AbleToEdit = isAbleToEdit(loggedUser, user);
+
+  const [formOpened, setFormOpened] = useState(false);
+  const CreateClick = () => {
+    setFormOpened(true);
+  };
+
+  const closeForm = () => {
+    setFormOpened(false);
+  };
+
+  const create = async () => {
+    closeForm();
+  };
+
+  const [updateUserMutation] = useMutation(UPDATE_USER, {
+    refetchQueries: [{ query: USER, variables: { id: user?.id } }]
   });
 
-  const [updateUserMutation, { loading: updateUserLoading }] = useMutation(
-    UPDATE_USER,
-    {
-      refetchQueries: [{ query: USER, variables: { id: user?.id } }]
-    }
-  );
-
-  const ableToEdit = isAbleToEdit(loggedUser, user);
-
-  const onSubmit = async ({ skillName, mastery }: IFormInput) => {
-    reset();
-
-    // doesn't work because of the backend
+  const handleDelete = async (skill: IFormInput) => {
     await updateUserMutation({
       variables: {
         id: user?.id,
         user: {
           profile: {
-            skills: [{ skill_name: skillName, mastery }]
-          }
+            first_name: user?.profile.first_name || '',
+            last_name: user?.profile.last_name || '',
+            skills: createArrayForSkills(user?.profile.skills).filter(
+              (elem) => JSON.stringify(elem) !== JSON.stringify(skill)
+            )
+          },
+          departmentId: user?.department?.id || '',
+          positionId: user?.position?.id || ''
         }
       }
     });
   };
+  const onDeleteSkill = (skill_name: string, mastery: string) => {
+    return () => handleDelete({ skill_name, mastery });
+  };
 
   return (
-    <Preloader loading={loading || updateUserLoading} error={error}>
-      <ProfileLayout>
-        <>
-          <Box>
-            {user?.profile.skills.map((skill) => (
-              <StyledBox key={skill.skill_name}>
+    <Preloader loading={loading} error={error}>
+      <EmployeeTabs />
+      <AddLanguageForm opened={formOpened} close={closeForm} confirm={create} />
+      <Styled.PaperWrapper elevation={7}>
+        <Box>
+          {user?.profile.skills.length !== 0 ? (
+            user?.profile.skills.map((skill) => (
+              <Styled.StyledBox key={skill.skill_name}>
                 <Typography>{skill.skill_name}</Typography>
                 <Chip label={skill.mastery} variant="outlined" />
-              </StyledBox>
-            ))}
-          </Box>
-          {ableToEdit && (
-            <StyledForm
-              component="form"
-              marginTop={5}
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <Typography variant="h6">New skill</Typography>
-              <StyledFormControl>
-                <StyledInputLabel htmlFor="skill-name">
-                  Skill name
-                </StyledInputLabel>
-                <StyledOutlinedInput
-                  id="skill-name"
-                  label="Skill name"
-                  size="small"
-                  {...register('skillName', { required: true })}
-                />
-              </StyledFormControl>
-              <StyledFormControl>
-                <StyledInputLabel htmlFor="mastery">Mastery</StyledInputLabel>
-                <StyledOutlinedInput
-                  id="mastery"
-                  label="mastery"
-                  size="small"
-                  {...register('mastery', { required: true })}
-                />
-              </StyledFormControl>
-              {(errors.skillName || errors.mastery) && (
-                <Typography color="secondary">
-                  Skill name and mastery can&apos;t be empty
-                </Typography>
-              )}
-              <StyledButton variant="contained" color="secondary" type="submit">
-                Save
-              </StyledButton>
-            </StyledForm>
+                <IconButton
+                  disabled={!AbleToEdit}
+                  aria-label="delete"
+                  onClick={onDeleteSkill(skill.skill_name, skill.mastery)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Styled.StyledBox>
+            ))
+          ) : (
+            <Typography>No skills were found</Typography>
           )}
-        </>
-      </ProfileLayout>
+        </Box>
+        <Button
+          disabled={!AbleToEdit}
+          color="secondary"
+          variant="contained"
+          onClick={CreateClick}
+          sx={Styled.ButtonStyles}
+        >
+          Add skill
+        </Button>
+      </Styled.PaperWrapper>
     </Preloader>
   );
 };

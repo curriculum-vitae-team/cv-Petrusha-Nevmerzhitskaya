@@ -1,10 +1,7 @@
 import { Box, Paper, styled } from '@mui/material';
 
 export const StyledBox = styled(Box)({
-  display: 'flex',
-  gap: '10px',
-  alignItems: 'center',
-  margin: '5px'
+  marginBottom: '10px'
 });
 
 export const PaperWrapper = styled(Paper)(() => ({
@@ -18,3 +15,10 @@ export const ButtonStyles = {
   height: '40px',
   width: '150px'
 };
+
+export const ItemBox = styled(Paper)({
+  padding: '10px',
+  minHeight: '50px',
+  minWidth: '290px',
+  marginBottom: '10px'
+});

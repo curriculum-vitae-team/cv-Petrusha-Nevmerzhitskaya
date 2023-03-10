@@ -1,9 +1,14 @@
+import { useReactiveVar } from '@apollo/client';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import SearchInput from '@components/Table/SearchInput';
+import { authService } from '@graphql/auth/authService';
+import isAdmin from '@utils/isAdmin';
 import CreateProjectForm from './CreateProjectsForm';
 
 export const ProjectsTableButtons = () => {
+  const user = useReactiveVar(authService.user$);
+  const AbleToEdit = isAdmin(user);
   const [formOpened, setFormOpened] = useState(false);
   const CreateClick = () => {
     setFormOpened(true);
@@ -24,7 +29,12 @@ export const ProjectsTableButtons = () => {
         confirm={create}
       />
       <SearchInput />
-      <Button color="secondary" variant="contained" onClick={CreateClick}>
+      <Button
+        disabled={!AbleToEdit}
+        color="secondary"
+        variant="contained"
+        onClick={CreateClick}
+      >
         Create Project
       </Button>
     </>
