@@ -1,56 +1,30 @@
-import { useReactiveVar } from '@apollo/client';
-import SearchIcon from '@mui/icons-material/Search';
-import { InputAdornment } from '@mui/material';
-import { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import Preloader from '@components/Preloader';
+import { createTable } from '@components/Table/Table';
+import { ProjectsTableButtons } from '@components/TableValues/ProjectPageValues/ProjectTableButtons';
+import { ProjectsTableHead } from '@components/TableValues/ProjectPageValues/ProjectTableHead';
+import { ProjectsTableRow } from '@components/TableValues/ProjectPageValues/ProjectTableRow';
+import { IProjectsResult } from '@graphql/projects/IProjectsResult';
+import { PROJECTS } from '@graphql/projects/query';
+import { IProject } from '@interfaces/IProject';
 
-import CustomTextField from '@components/CustomTextField';
-import ProjectsTable from '@components/ProjectsTable';
-import { authService } from '@graphql/auth/authService';
-import isAdmin from '@utils/isAdmin';
-import {
-  StyledBox,
-  StyledButton,
-  StyledPageBox
-} from '../EmployeesPage/EmployeesPage.styles';
+const Table = createTable<IProject>();
 
-const ProjectsPage: React.FC = () => {
-  const user = useReactiveVar(authService.user$);
-
-  const isUserAdmin = isAdmin(user);
-
-  const [search, setSearch] = useState('');
-
-  const searchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
+const ProjectPage = () => {
+  const { data, loading, error } = useQuery<IProjectsResult>(PROJECTS);
 
   return (
-    <StyledPageBox marginX={3}>
-      <StyledBox marginX={2} marginY={3}>
-        <CustomTextField
-          label="Search"
-          props={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-            size: 'small',
-            onChange: searchHandler,
-            value: search
-          }}
-        />
-        <StyledButton
-          variant="outlined"
-          color="secondary"
-          disabled={!isUserAdmin}
-        >
-          Create project
-        </StyledButton>
-      </StyledBox>
-      <ProjectsTable search={search} isUserAdmin={isUserAdmin} />
-    </StyledPageBox>
+    <Preloader loading={loading} error={error}>
+      <Table
+        items={data?.projects || []}
+        TableButtonsComponent={ProjectsTableButtons}
+        TableHeadComponent={ProjectsTableHead}
+        TableRowComponent={ProjectsTableRow}
+        searchBy={['name', 'internal_name']}
+        defaultSortBy="name"
+      />
+    </Preloader>
   );
 };
 
-export default ProjectsPage;
+export default ProjectPage;

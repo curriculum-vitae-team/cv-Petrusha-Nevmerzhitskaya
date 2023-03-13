@@ -6,14 +6,18 @@ import { TableRowProps } from '@components/Table/Table.types';
 import { RoutesPath } from '@constants/routes';
 import { authService } from '@graphql/auth/authService';
 import { DELETE_CV } from '@graphql/cvs/mutation';
+import { CVS } from '@graphql/cvs/query';
 import { ICv } from '@interfaces/ICv';
-import isAdmin from '@utils/isAdmin';
+import isAbleToEdit from '@utils/isAbleToEdit';
 import { DescriptionStyles } from './CvsTableRow.styles';
 
 export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
   const user = useReactiveVar(authService.user$);
-  const isUserAdmin = isAdmin(user);
-  const [deleteCV] = useMutation<{ affected: number }>(DELETE_CV);
+  const AbleToEdit = isAbleToEdit(user) || user?.id === item.user?.id;
+
+  const [deleteCV] = useMutation<{ affected: number }>(DELETE_CV, {
+    refetchQueries: [{ query: CVS }]
+  });
   const navigate = useNavigate();
 
   const handleDeleteCV = async () => {
@@ -24,7 +28,6 @@ export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
 
   const handleClick = () => {
     navigate(`${RoutesPath.CVS}/${item.id}/details`);
-    console.log(item.id);
   };
 
   const projectNames =
@@ -41,7 +44,7 @@ export const CVsTableRow = ({ item }: TableRowProps<ICv>) => {
       <TableCell>
         <ActionsMenu>
           <MenuItem onClick={handleClick}>CV</MenuItem>
-          <MenuItem disabled={!isUserAdmin} onClick={handleDeleteCV}>
+          <MenuItem disabled={!AbleToEdit} onClick={handleDeleteCV}>
             Delete CV
           </MenuItem>
         </ActionsMenu>

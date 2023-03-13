@@ -1,6 +1,12 @@
-import { styled } from '@mui/material';
+import { styled, Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 
-export const BreadcrumbsWrap = styled('div')(() => ({
-  marginTop: '68px',
-  marginLeft: '10px'
+export const Breadcrumbs = styled(MuiBreadcrumbs)(() => ({
+  marginTop: '78px',
+  marginLeft: '40px'
 }));
+
+export const HomeStyles = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '7px'
+};

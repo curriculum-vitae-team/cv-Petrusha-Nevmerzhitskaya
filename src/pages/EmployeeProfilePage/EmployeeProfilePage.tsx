@@ -11,6 +11,7 @@ import {
   UPLOAD_AVATAR
 } from '@graphql/user/mutation';
 import { USER } from '@graphql/user/query';
+import { useBreadcrumbs } from '@hooks/useBreadcrumbs';
 import useUserData from '@hooks/useUserData';
 import isAbleToEdit from '@utils/isAbleToEdit';
 
@@ -33,6 +34,13 @@ const EmployeeProfilePage: React.FC = () => {
   const { user, loggedUser, loading, error } = useUserData();
 
   const ableToEdit = isAbleToEdit(loggedUser, user);
+
+  useBreadcrumbs({
+    [`employees/${user?.id}`]: {
+      text: user?.profile.full_name || user?.email,
+      to: `cvs/${user?.id}`
+    }
+  });
 
   const [updateUserMutation, { loading: updateUserLoading }] = useMutation(
     UPDATE_USER,

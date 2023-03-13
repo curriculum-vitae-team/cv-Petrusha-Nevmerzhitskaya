@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  styled
-} from '@mui/material';
+import { Box, Paper, styled } from '@mui/material';
 
 export const StyledBox = styled(Box)({
   display: 'flex',
@@ -14,26 +7,14 @@ export const StyledBox = styled(Box)({
   margin: '5px'
 });
 
-export const StyledOutlinedInput = styled(OutlinedInput)({
-  borderRadius: 0
-});
-
-export const StyledButton = styled(Button)({
-  borderRadius: 0
-});
-
-export const StyledForm = styled(Box)({
+export const PaperWrapper = styled(Paper)(() => ({
   display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  gap: '15px'
-});
+  justifyContent: 'space-between',
+  padding: 20,
+  margin: 10
+}));
 
-export const StyledFormControl = styled(FormControl)({
-  marginTop: '-15px'
-});
-
-export const StyledInputLabel = styled(InputLabel)({
-  position: 'relative',
-  top: '15px'
-});
+export const ButtonStyles = {
+  height: '40px',
+  width: '150px'
+};

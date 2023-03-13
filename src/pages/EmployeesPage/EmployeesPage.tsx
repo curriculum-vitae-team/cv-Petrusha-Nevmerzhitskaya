@@ -63,8 +63,8 @@ const EmployeesPage: React.FC = () => {
             />
           </FormControl>
           <StyledButton
-            variant="outlined"
             color="secondary"
+            variant="contained"
             disabled={!isUserAdmin}
             onClick={createUserClick}
           >
