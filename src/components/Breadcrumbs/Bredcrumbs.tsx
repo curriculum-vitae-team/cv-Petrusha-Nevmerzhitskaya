@@ -3,7 +3,7 @@ import { Link, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BreadcrumbsContext } from './Breadcrumbs.context';
-import * as Styled from './Breadcrumbs.style';
+import { Breadcrumbs, HomeStyles } from './Breadcrumbs.style';
 
 export const HeaderBreadcrumbs = () => {
   const location = useLocation();
@@ -18,10 +18,8 @@ export const HeaderBreadcrumbs = () => {
     }));
 
   return (
-    <Styled.Breadcrumbs
-      separator={<NavigateNext fontSize="small" color="disabled" />}
-    >
-      <Link href="/" sx={Styled.HomeStyles}>
+    <Breadcrumbs separator={<NavigateNext fontSize="small" color="disabled" />}>
+      <Link href="/" sx={HomeStyles}>
         <HomeOutlined />
         <Typography>Home</Typography>
       </Link>
@@ -33,6 +31,6 @@ export const HeaderBreadcrumbs = () => {
           </Link>
         );
       })}
-    </Styled.Breadcrumbs>
+    </Breadcrumbs>
   );
 };
